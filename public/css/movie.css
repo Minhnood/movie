@@ -1,0 +1,87 @@
+.movie-card:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.rating-badge {
+    width: 50px;
+    height: 50px;
+    border-radius: 100% !important; 
+    background-color: #0d111791 !important; 
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 4px solid #d2d531; 
+  }
+
+
+.movie-card {
+    position: relative;
+    overflow: hidden;
+    height: 100% !important;
+}
+
+.movie-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.15); /* Nền trong suốt nhẹ */
+    border-radius: 50%;
+    padding: 15px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.play-button svg {
+    color: #FFD700; /* Màu vàng nổi bật */
+    font-size: 32px;
+}
+
+.play-button:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Hiệu ứng hover */
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.bookmark-icon {
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.movie-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.play-button {
+    opacity: 0;  /* Ẩn ban đầu */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.movie-card:hover .play-button {
+    opacity: 1;  /* Hiện khi hover */
+}
+
