@@ -40,7 +40,7 @@ function MovieCard({ movie }) {
         }
     });
 
-    
+
 
     function addFavourite() {
         // lock icon bookmark
@@ -51,29 +51,40 @@ function MovieCard({ movie }) {
         });
     }
 
-    let lock =  isLockbookmark ? 'locked' : 'unlocked';
+    let lock = isLockbookmark ? 'locked' : 'unlocked';
 
     // viet dieu kien de active bookmark neu phim da duoc yeu thich
     const bookmark = currentUser ? (<BsBookmark className={`bookmark-icon position-absolute top-0 end-0 m-2 bg-dark p-2 fs-2 ${color} rounded-2`} size={40} onClick={addFavourite} />) : "";
     return (
         <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-            <Card className={`movie-card position-relative text-white ${lock}`}>
+            <Card className={`movie-card position-relative text-white ${lock} h-100 d-flex flex-column`}>
                 <Link to={`/DetailMovie/${movie.id}`} className="nav-link text-white">
-                    <Card.Img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} className="movie-img" />
+                    <Card.Img
+                        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                        className="movie-img"
+                    />
                     <span
                         className="rating-badge position-absolute top-0 start-0 m-2"
-                        style={{ borderColor: getBorderColor(Math.floor(movie.vote_average * 10)), backgroundColor: "#0d111724" }}
+                        style={{
+                            borderColor: getBorderColor(Math.floor(movie.vote_average * 10)),
+                            backgroundColor: "#0d111724",
+                        }}
                     >
                         {(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}
                     </span>
-                    <Card.Body className="text-center">
-                        <Card.Title className="fw-bold text-dark">{movie.original_title}</Card.Title>
-                        <Card.Text className="fw-bold text-warning">{genreNames.join(', ')}</Card.Text>
+                    <Card.Body className="text-center d-flex flex-column">
+                        <Card.Title className="fw-bold text-dark">
+                            {movie.original_title}
+                        </Card.Title>
+                        <Card.Text className="fw-bold text-warning mt-auto">
+                            {genreNames.join(", ")}
+                        </Card.Text>
                     </Card.Body>
                 </Link>
                 {bookmark}
             </Card>
         </Col>
+
     );
 }
 

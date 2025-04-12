@@ -9,8 +9,6 @@ const initialState = {
 export const fetchMe = createAsyncThunk("user/fetchMe", async (sessionId, thunkAPI) => {
     try {
         const response = await userService.fetchMe(sessionId);
-        console.log(response.data);
-        
         localStorage.setItem("ACCOUNT", response.data.id);
         return response.data;
     } catch (err) {

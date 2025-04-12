@@ -14,6 +14,7 @@ import LoginForm from './pages/Login';
 import SearchPage from './pages/SearchPage';
 import CategoryMovie from './pages/CategoryMovie';
 import Favourite from './pages/Favourite';
+import CastListPage from './pages/CastListPage';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/category" element={<CategoryMovie />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/favourite" element={<Favourite />} />
+        <Route path="/DetailMovie/:id/cast" element={<CastListPage />} />
       </Routes>
       <Footer />
     </BrowserRouter >

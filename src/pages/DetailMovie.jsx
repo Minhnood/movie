@@ -59,21 +59,29 @@ function DetailMovie() {
         </Row>
       </Container>
       <Container className="mt-5">
-        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className="">View More</Button></div>
+        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className=""><Link to={`/DetailMovie/${id}/cast`} className="text-black text-decoration-none">View More</Link></Button></div>
         <Row>
           {Credits.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4">
-              <Card className={`movie-card position-relative text-white`}>
-                <Card.Img src={`https://image.tmdb.org/t/p/original${cast.profile_path}`} className="movie-img" />
-                <Card.Body className="text-center">
-                  <Card.Title className="fw-bold text-dark fs-4">{cast.original_name}</Card.Title>
-                  <Card.Title className="text-dark fs-6">{cast.character}</Card.Title>
+              <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
+                <Card.Img
+                  src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                  className="movie-img"
+                />
+                <Card.Body className="text-center d-flex flex-column">
+                  <Card.Title className="fw-bold text-dark fs-4">
+                    {cast.original_name}
+                  </Card.Title>
+                  <Card.Title className="text-dark fs-6 mt-auto">
+                    {cast.character}
+                  </Card.Title>
                 </Card.Body>
               </Card>
             </Col>
+
           ))}
         </Row>
-       
+
       </Container>
       {/* Recommended Movies Section */}
       <Container className="mt-5">

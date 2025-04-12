@@ -9,6 +9,7 @@ function NavHeadt() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.USER.currentUser);
   const genreList = useSelector((state) => state.MOVIE.genreList);
+  const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
 
   const SESSION_ID = localStorage.getItem("SESSION_ID");
   const navigate = useNavigate();
@@ -37,9 +38,11 @@ function NavHeadt() {
     navigate("/login");
   }
 
+
   const userMenu = currentUser ? (
     <NavDropdown title={currentUser?.username} id="basic-nav-dropdown">
       <NavDropdown.Item as={Link} to="/myProfile">Thông tin</NavDropdown.Item>
+      <NavDropdown.Item as={Link} to="/favourite"> Phim yêu thích ( {listFavourite.length} )</NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item onClick={handleLogout}>Đăng xuất</NavDropdown.Item>
     </NavDropdown>
@@ -51,11 +54,7 @@ function NavHeadt() {
     </>
   );
 
-  const favourite = currentUser ? (
-    <Nav.Item>
-      <Link to="/favourite" className="nav-link text-white">Phim yêu thích</Link>
-    </Nav.Item>
-  ) : "";
+
 
   // Render danh mục
   const genreLists = genreList.length > 0 ? (
@@ -79,7 +78,6 @@ function NavHeadt() {
               {genreLists}
             </NavDropdown>
             {userMenu}
-            {favourite}
           </Nav>
           <InputGroup className="w-50">
             <Form.Control

@@ -20,6 +20,7 @@ const initialState = {
     Upcoming:[],
     TopRated:[],
     Credits: [],
+    CreditsCrew: [],
 };
 
 export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
@@ -121,8 +122,11 @@ export const fetchFavourite = createAsyncThunk("post/fetchFavourite", async (dat
 
 export const fetchCredits = createAsyncThunk("post/fetchCredits", async (data, thunkAPI) => {
     const response = await movieService.getCredits(data);
-    console.log(response);
-    return response.data.cast;
+    return {
+       cast: response.data.cast,
+       crew: response.data.crew,
+    }
+
 });
 
 const slice = createSlice({
@@ -163,7 +167,8 @@ const slice = createSlice({
             state.listFavourite = action.payload;
         });
         buidler.addCase(fetchCredits.fulfilled, (state, action) => {
-            state.Credits = action.payload;
+            state.Credits = action.payload.cast;
+            state.CreditsCrew = action.payload.crew;
         });
     }
 });
