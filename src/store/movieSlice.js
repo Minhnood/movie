@@ -18,7 +18,8 @@ const initialState = {
     genreList: [],
     searchList: [],
     Upcoming:[],
-    TopRated:[]
+    TopRated:[],
+    Credits: [],
 };
 
 export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
@@ -118,6 +119,12 @@ export const fetchFavourite = createAsyncThunk("post/fetchFavourite", async (dat
     return response.data.results;
 });
 
+export const fetchCredits = createAsyncThunk("post/fetchCredits", async (data, thunkAPI) => {
+    const response = await movieService.getCredits(data);
+    console.log(response);
+    return response.data.cast;
+});
+
 const slice = createSlice({
     name: "post",
     initialState,
@@ -153,9 +160,10 @@ const slice = createSlice({
             state.MaxTopRatedPgae = action.payload.maxPage;
         });
         buidler.addCase(fetchFavourite.fulfilled, (state, action) => {
-            console.log(action);
-            
             state.listFavourite = action.payload;
+        });
+        buidler.addCase(fetchCredits.fulfilled, (state, action) => {
+            state.Credits = action.payload;
         });
     }
 });

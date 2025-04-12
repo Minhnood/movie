@@ -27,6 +27,9 @@ const movieService = {
     },
     getFavourite() {
         return API.callWithToken().get(`/account/123/favorite/movies`);
+    },
+    getCredits(data) {
+        return API.call().get(`/movie/${data}/credits`);
     }
 }
 

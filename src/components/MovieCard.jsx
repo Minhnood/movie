@@ -1,4 +1,4 @@
-import { Badge, Card, Col } from "react-bootstrap";
+import { Badge, Button, Card, Col } from "react-bootstrap";
 import { BsBookmark } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ function MovieCard({ movie }) {
     const genreList = useSelector((state) => state.MOVIE.genreList);
     const currentUser = useSelector((state) => state.USER.currentUser);
     const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
+    const [isLockbookmark, setIsLockbookmark] = useState(false);
     // lay danh sach phim yeu thich tu store
     const genreNames = [];
     const [id, setId] = useState(0);
@@ -39,17 +40,24 @@ function MovieCard({ movie }) {
         }
     });
 
+    
+
     function addFavourite() {
         // lock icon bookmark
-        dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite }));
-        // unlock
+        setIsLockbookmark(true);
+        dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite })).then(res => {
+            // unlock
+            setIsLockbookmark(false)
+        });
     }
 
+    let lock =  isLockbookmark ? 'locked' : 'unlocked';
+
     // viet dieu kien de active bookmark neu phim da duoc yeu thich
-    const bookmark = currentUser ? (<BsBookmark className={`bookmark-icon position-absolute top-0 end-0 m-2 ${color}`} size={30} onClick={addFavourite} />) : "";
+    const bookmark = currentUser ? (<BsBookmark className={`bookmark-icon position-absolute top-0 end-0 m-2 bg-dark p-2 fs-2 ${color} rounded-2`} size={40} onClick={addFavourite} />) : "";
     return (
         <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-            <Card className="movie-card position-relative text-white">
+            <Card className={`movie-card position-relative text-white ${lock}`}>
                 <Link to={`/DetailMovie/${movie.id}`} className="nav-link text-white">
                     <Card.Img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} className="movie-img" />
                     <span

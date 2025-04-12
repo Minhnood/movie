@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Container, Row, Col, Card, Badge } from "react-bootstrap";
+import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
 import { BsBookmark } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { fetchDetailsMovie, fetchRecommendations } from "../store/movieSlice";
+import { fetchCredits, fetchDetailsMovie, fetchRecommendations } from "../store/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
 
@@ -11,6 +11,7 @@ function DetailMovie() {
   const dispatch = useDispatch();
   const detailMovie = useSelector((state) => state.MOVIE.detailMovie);
   const Recommendations = useSelector((state) => state.MOVIE.Recommendations);
+  const Credits = useSelector((state) => state.MOVIE.Credits);
 
   const { id } = useParams();
 
@@ -24,6 +25,7 @@ function DetailMovie() {
 
   useEffect(() => {
     dispatch(fetchDetailsMovie(id));
+    dispatch(fetchCredits(id));
     dispatch(fetchRecommendations(id));
   }, [dispatch, id]);
 
@@ -56,10 +58,26 @@ function DetailMovie() {
           </Col>
         </Row>
       </Container>
-
+      <Container className="mt-5">
+        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className="">View More</Button></div>
+        <Row>
+          {Credits.slice(0, 6).map((cast, index) => (
+            <Col xs={12} sm={6} md={4} lg={2} className="mb-4">
+              <Card className={`movie-card position-relative text-white`}>
+                <Card.Img src={`https://image.tmdb.org/t/p/original${cast.profile_path}`} className="movie-img" />
+                <Card.Body className="text-center">
+                  <Card.Title className="fw-bold text-dark fs-4">{cast.original_name}</Card.Title>
+                  <Card.Title className="text-dark fs-6">{cast.character}</Card.Title>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+       
+      </Container>
       {/* Recommended Movies Section */}
       <Container className="mt-5">
-        <h3>You may also like...</h3>
+        <h3>You May Also Like...</h3>
         <Row>
           {Recommendations.map((movie, index) => (
             <MovieCard key={index} movie={movie} />
