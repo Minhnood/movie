@@ -89,7 +89,3 @@
     opacity: 1;
     /* Hiện khi hover */
 }
-
-.locked {
-    pointer-events: none;
-}

@@ -30,7 +30,13 @@ const movieService = {
     },
     getCredits(data) {
         return API.call().get(`/movie/${data}/credits`);
-    }
+    },
+    getDetailsCredits(data) {
+        return API.call().get(`/person/${data}`);
+    },
+    getMovieCredits(data) {
+        return API.call().get(`/person/${data}/movie_credits`);
+    },
 }
 
 export default movieService;

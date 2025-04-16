@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCredits, fetchDetailsMovie } from '../store/movieSlice';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function CastListPage() {
   const dispatch = useDispatch();
@@ -48,46 +48,50 @@ function CastListPage() {
             <ListGroup variant="flush">
               {Credits.map((actor, index) => (
                 <ListGroup.Item key={index}>
-                  <Row>
-                    <Col xs={2}>
-                      <Image
-                        src={actor.profile_path
-                          ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                          : fallbackImage}
-                        roundedCircle
-                        fluid
-                      />
-                    </Col>
-                    <Col>
-                      <strong>{actor.name}</strong>
-                      <div>{actor.character}</div>
-                    </Col>
-                  </Row>
+                  <Link to={`/person/${actor.id}`} className="nav-link">
+                    <Row className='d-flex align-items-center'>
+                      <Col xs={2}>
+                        <Image
+                          src={actor.profile_path
+                            ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                            : fallbackImage}
+                          roundedCircle
+                          fluid
+                        />
+                      </Col>
+                      <Col>
+                        <strong>{actor.name}</strong>
+                        <div>{actor.character}</div>
+                      </Col>
+                    </Row>
+                  </Link>
                 </ListGroup.Item>
               ))}
             </ListGroup>
           </Col>
 
           <Col md={6}>
-            <h5>Phí hành đoàn ({CreditsCrew.length})</h5>
+            <h5>Phi hành đoàn ({CreditsCrew.length})</h5>
             <ListGroup variant="flush">
               {CreditsCrew.map((member, index) => (
                 <ListGroup.Item key={index}>
-                  <Row>
-                    <Col xs={2}>
-                      <Image
-                        src={member.profile_path
-                          ? `https://image.tmdb.org/t/p/original${member.profile_path}`
-                          : fallbackImage}
-                        roundedCircle
-                        fluid
-                      />
-                    </Col>
-                    <Col>
-                      <strong>{member.name}</strong>
-                      <div>{member.job}</div>
-                    </Col>
-                  </Row>
+                  <Link to={`/person/${member.id}`} className="nav-link">
+                    <Row className='d-flex align-items-center'>
+                      <Col xs={2}>
+                        <Image  
+                          src={member.profile_path
+                            ? `https://image.tmdb.org/t/p/original${member.profile_path}`
+                            : fallbackImage}
+                          roundedCircle
+                          fluid
+                        />
+                      </Col>
+                      <Col>
+                        <strong>{member.name}</strong>
+                        <div>{member.job}</div>
+                      </Col>
+                    </Row>
+                  </Link>
                 </ListGroup.Item>
               ))}
             </ListGroup>

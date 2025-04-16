@@ -7,9 +7,8 @@ import { fetchFavourite, postFavourite } from "../store/movieSlice";
 
 
 
-function MovieCard({ movie }) {
+function TvCard({ movie }) {
     const dispatch = useDispatch();
-    const genreList = useSelector((state) => state.MOVIE.genreList);
     const currentUser = useSelector((state) => state.USER.currentUser);
     const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
     const [isLockbookmark, setIsLockbookmark] = useState(false);
@@ -17,11 +16,6 @@ function MovieCard({ movie }) {
     const genreNames = [];
     const [id, setId] = useState(0);
 
-    genreList.forEach(genreItem => {
-        if (movie.genre_ids.includes(genreItem.id)) {
-            genreNames.push(genreItem.name);
-        }
-    });
     function getBorderColor(score) {
         if (score >= 70) return "#21d07a";
         if (score >= 50) return "#d2d531";
@@ -73,10 +67,10 @@ function MovieCard({ movie }) {
                     </span>
                     <Card.Body className="text-center d-flex flex-column">
                         <Card.Title className="fw-bold text-dark">
-                            {movie.original_title}
+                            {movie.original_name}
                         </Card.Title>
                         <Card.Text className="fw-bold text-warning mt-auto">
-                            {genreNames.join(", ")}
+                            {movie.first_air_date}
                         </Card.Text>
                     </Card.Body>
                 </Link>
@@ -87,4 +81,4 @@ function MovieCard({ movie }) {
     );
 }
 
-export default MovieCard;
+export default TvCard;

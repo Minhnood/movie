@@ -21,6 +21,9 @@ const initialState = {
     TopRated:[],
     Credits: [],
     CreditsCrew: [],
+    detailsCredits: [],
+    moviesActed: [],
+    filmsMade: [],
 };
 
 export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
@@ -129,6 +132,21 @@ export const fetchCredits = createAsyncThunk("post/fetchCredits", async (data, t
 
 });
 
+export const fetchDetailsCredits = createAsyncThunk("post/fetchDetailsCredits", async (data, thunkAPI) => {
+    const response = await movieService.getDetailsCredits(data);
+    return response.data;
+});
+
+export const fetchMovieCredits = createAsyncThunk("post/fetchMovieCredits", async (data, thunkAPI) => {
+    const response = await movieService.getMovieCredits(data);
+    console.log(response.data);
+    
+    return {
+        cast: response.data.cast,
+        crew: response.data.crew,
+     }
+});
+
 const slice = createSlice({
     name: "post",
     initialState,
@@ -169,6 +187,13 @@ const slice = createSlice({
         buidler.addCase(fetchCredits.fulfilled, (state, action) => {
             state.Credits = action.payload.cast;
             state.CreditsCrew = action.payload.crew;
+        });
+        buidler.addCase(fetchDetailsCredits.fulfilled, (state, action) => {
+            state.detailsCredits = action.payload;
+        });
+        buidler.addCase(fetchMovieCredits.fulfilled, (state, action) => {
+            state.moviesActed = action.payload.cast;
+            state.filmsMade = action.payload.crew;
         });
     }
 });

@@ -15,6 +15,9 @@ import SearchPage from './pages/SearchPage';
 import CategoryMovie from './pages/CategoryMovie';
 import Favourite from './pages/Favourite';
 import CastListPage from './pages/CastListPage';
+import ActorPage from './pages/ActorPage';
+import TvPage from './pages/TvPage';
+import ScrollToTop from './pages/ScrollToTop';
 
 function App() {
 
@@ -29,6 +32,7 @@ function App() {
     <BrowserRouter>
       <NavHeadt />
       <Routes>
+        <ScrollToTop />
         <Route path="/" element={<HomePage />} />
         <Route path="/myProfile" element={<MyHotFlix />} />
         <Route path="/Catalog" element={<Catalog />} />
@@ -38,6 +42,8 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/favourite" element={<Favourite />} />
         <Route path="/DetailMovie/:id/cast" element={<CastListPage />} />
+        <Route path="/person/:id" element={<ActorPage />} />
+        <Route path="/tv_list" element={<TvPage />} />
       </Routes>
       <Footer />
     </BrowserRouter >

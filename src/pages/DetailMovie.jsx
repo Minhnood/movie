@@ -15,14 +15,6 @@ function DetailMovie() {
 
   const { id } = useParams();
 
-  const movies = [
-    { title: "The Chebod", genre: "Drama", rating: "9.1", image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=i2M2IgCcw574LT-bXFY92g" },
-    { title: "Green Hell", genre: "Action, Thriller", rating: "7.5", image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=i2M2IgCcw574LT-bXFY92g" },
-    { title: "Benched", genre: "Comedy", rating: "8.0", image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=i2M2IgCcw574LT-bXFY92g" },
-    { title: "Whitney", genre: "Romance, Drama", rating: "6.3", image: "https://vcdn1-dulich.vnecdn.net/2021/07/16/1-1626437591.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=i2M2IgCcw574LT-bXFY92g" },
-  ];
-
-
   useEffect(() => {
     dispatch(fetchDetailsMovie(id));
     dispatch(fetchCredits(id));
@@ -63,22 +55,23 @@ function DetailMovie() {
         <Row>
           {Credits.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4">
-              <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
-                <Card.Img
-                  src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
-                  className="movie-img"
-                />
-                <Card.Body className="text-center d-flex flex-column">
-                  <Card.Title className="fw-bold text-dark fs-4">
-                    {cast.original_name}
-                  </Card.Title>
-                  <Card.Title className="text-dark fs-6 mt-auto">
-                    {cast.character}
-                  </Card.Title>
-                </Card.Body>
-              </Card>
+              <Link to={`/person/${cast.id}`} className="nav-link text-white">
+                <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
+                  <Card.Img
+                    src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
+                    className="movie-img"
+                  />
+                  <Card.Body className="text-center d-flex flex-column">
+                    <Card.Title className="fw-bold text-dark fs-4">
+                      {cast.original_name}
+                    </Card.Title>
+                    <Card.Title className="text-dark fs-6 mt-auto">
+                      {cast.character}
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
-
           ))}
         </Row>
 

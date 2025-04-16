@@ -77,6 +77,9 @@ function NavHeadt() {
             <NavDropdown title="Danh mục" id="basic-nav-dropdown">
               {genreLists}
             </NavDropdown>
+            <Nav.Item>
+              <Link to="/tv_list" className="nav-link text-white">Tv Shows</Link>
+            </Nav.Item>
             {userMenu}
           </Nav>
           <InputGroup className="w-50">
