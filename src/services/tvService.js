@@ -10,6 +10,18 @@ const tvService = {
     getTopRatedTvList() {
         return API.call().get(`/tv/top_rated`);
     },
+    getDetailsTv(data) {
+        return API.call().get(`/tv/${data}`);
+    },
+    getTvRecommendations(data) {
+        return API.call().get(`/tv/${data}/recommendations`);
+    },
+    getTvDetailsSeason(data) {
+        return API.call().get(`/tv/${data.id}/season/${data.seasonId}`);
+    },
+    getTvDetailsEpisodeId(data) {
+        return API.call().get(`/tv/${data.id}/season/${data.seasonId}/episode/${data.episodeId}`);
+    },
 }   
 
 export default tvService;

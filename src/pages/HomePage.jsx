@@ -11,6 +11,10 @@ import MovieCard from "../components/MovieCard";
 function HomePage() {
     const dispatch = useDispatch();
 
+    // PascalCase: MyProfile
+    // camelCase: myProfile
+    // snake_case: my_profile
+    // SNAKE_CASE
     const ListMovie = useSelector((state) => state.MOVIE.list);
     const ListUpcoming = useSelector((state) => state.MOVIE.Upcoming);
     const ListTopRated = useSelector((state) => state.MOVIE.TopRated);

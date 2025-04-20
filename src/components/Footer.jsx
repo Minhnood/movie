@@ -1,7 +1,6 @@
 import { Container } from "react-bootstrap";
 
 function Footer() {
-    const currentYear = new Date().getFullYear();
 
     return (
         <footer className="py-4 bg-dark text-light">
