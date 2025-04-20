@@ -7,13 +7,13 @@ const tvService = {
     getTodayTvList(data) {
         return API.call().get(`/tv/airing_today?page=${data}`);
     },
-    getTopRatedTvList() {
+    gettopRatedTvList() {
         return API.call().get(`/tv/top_rated`);
     },
     getDetailsTv(data) {
         return API.call().get(`/tv/${data}`);
     },
-    getTvRecommendations(data) {
+    getTvrecommendations(data) {
         return API.call().get(`/tv/${data}/recommendations`);
     },
     getTvDetailsSeason(data) {

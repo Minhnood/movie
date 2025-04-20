@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTvDetails, fetchTvDetailsSeason, fetchTvRecommendations } from "../store/tvSlice";
+import { fetchTvDetails, fetchTvDetailsSeason, fetchTvrecommendations } from "../store/tvSlice";
 import TvCard from "../components/TvCard";
 
 function TvSeasons() {
@@ -49,7 +49,7 @@ function TvSeasons() {
         <Row>
           {episodes.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-              <Link to={`/tvDetails/${id}/season?ids=${seasonsId}/episodeId?key=${episodes.id}`} className="nav-link text-white">
+              <Link to={`/tv-details/${id}/season?ids=${seasonsId}/episodeId?key=${cast.id}`} className="nav-link text-white">
                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Img

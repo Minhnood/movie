@@ -73,7 +73,7 @@ function SearchPage() {
                         return (
                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
                                 <Card className="movie-card position-relative text-white">
-                                    <Link to={`/DetailMovie/${movie.id}`} className="nav-link text-white">
+                                    <Link to={`/detail-movie/${movie.id}`} className="nav-link text-white">
                                         <Card.Img
                                             src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                                             className="movie-img"

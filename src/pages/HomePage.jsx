@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Row, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    fetchMovieUpcoming,
+    fetchMovieupcoming,
     fetchPopularList,
     fetchTopRated
 } from "../store/movieSlice";
@@ -16,55 +16,55 @@ function HomePage() {
     // snake_case: my_profile
     // SNAKE_CASE
     const ListMovie = useSelector((state) => state.MOVIE.list);
-    const ListUpcoming = useSelector((state) => state.MOVIE.Upcoming);
-    const ListTopRated = useSelector((state) => state.MOVIE.TopRated);
+    const Listupcoming = useSelector((state) => state.MOVIE.upcoming);
+    const ListtopRated = useSelector((state) => state.MOVIE.topRated);
 
     const popularPage = useSelector((state) => state.MOVIE.listPage);
-    const UpcomingPage = useSelector((state) => state.MOVIE.UpcomingPage);
-    const MaxUpcomingPage = useSelector((state) => state.MOVIE.MaxUpcomingPage);
-    const TopRatedPage = useSelector((state) => state.MOVIE.TopRatedPage);
-    const MaxTopRatedPage = useSelector((state) => state.MOVIE.MaxTopRatedPgae);
+    const upcomingPage = useSelector((state) => state.MOVIE.upcomingPage);
+    const maxupcomingPage = useSelector((state) => state.MOVIE.maxupcomingPage);
+    const topRatedPage = useSelector((state) => state.MOVIE.topRatedPage);
+    const MaxtopRatedPage = useSelector((state) => state.MOVIE.maxtopRatedPgae);
 
     const [page, setPage] = useState(1);
-    const [pageUpcoming, setPageUpcoming] = useState(1);
-    const [pageTopRated, setPageTopRated] = useState(1);
+    const [pageupcoming, setPageupcoming] = useState(1);
+    const [pagetopRated, setPagetopRated] = useState(1);
 
     useEffect(() => {
         dispatch(fetchPopularList(page));
-        dispatch(fetchMovieUpcoming(pageUpcoming));
-        dispatch(fetchTopRated(pageTopRated));
-    }, [dispatch, page, pageUpcoming, pageTopRated]);
+        dispatch(fetchMovieupcoming(pageupcoming));
+        dispatch(fetchTopRated(pagetopRated));
+    }, [dispatch, page, pageupcoming, pagetopRated]);
 
     const disabledPopularPrev = popularPage === 1 ? "disabled" : "";
-    const disabledUpcomingPrev = UpcomingPage === 1 ? "disabled" : "";
-    const disabledUpcomingNext = UpcomingPage === MaxUpcomingPage ? "disabled" : "";
-    const disabledTopRatedPrev = TopRatedPage === 1 ? "disabled" : "";
-    const disabledTopRatedNext = TopRatedPage === MaxTopRatedPage ? "disabled" : "";
+    const disabledupcomingPrev = upcomingPage === 1 ? "disabled" : "";
+    const disabledupcomingNext = upcomingPage === maxupcomingPage ? "disabled" : "";
+    const disabledtopRatedPrev = topRatedPage === 1 ? "disabled" : "";
+    const disabledtopRatedNext = topRatedPage === MaxtopRatedPage ? "disabled" : "";
 
-    const pageUpcomings = [];
-    const startPageUpcoming = Math.max(1, UpcomingPage - 2);
-    const endPageUpcoming = Math.min(MaxUpcomingPage, UpcomingPage + 2);
-    for (let i = startPageUpcoming; i <= endPageUpcoming; i++) {
-        pageUpcomings.push(
+    const pageupcomings = [];
+    const startPageupcoming = Math.max(1, upcomingPage - 2);
+    const endPageupcoming = Math.min(maxupcomingPage, upcomingPage + 2);
+    for (let i = startPageupcoming; i <= endPageupcoming; i++) {
+        pageupcomings.push(
             <Pagination.Item
                 key={`upcoming-${i}`}
-                onClick={() => setPageUpcoming(i)}
-                active={UpcomingPage === i}
+                onClick={() => setPageupcoming(i)}
+                active={upcomingPage === i}
             >
                 {i}
             </Pagination.Item>
         );
     }
 
-    const pageTopRateds = [];
-    const startPageTopRated = Math.max(1, TopRatedPage - 2);
-    const endPageTopRated = Math.min(MaxTopRatedPage, TopRatedPage + 2);
-    for (let i = startPageTopRated; i <= endPageTopRated; i++) {
-        pageTopRateds.push(
+    const pagetopRateds = [];
+    const startPagetopRated = Math.max(1, topRatedPage - 2);
+    const endPagetopRated = Math.min(MaxtopRatedPage, topRatedPage + 2);
+    for (let i = startPagetopRated; i <= endPagetopRated; i++) {
+        pagetopRateds.push(
             <Pagination.Item
-                key={`toprated-${i}`}
-                onClick={() => setPageTopRated(i)}
-                active={TopRatedPage === i}
+                key={`topRated-${i}`}
+                onClick={() => setPagetopRated(i)}
+                active={topRatedPage === i}
             >
              {i}
             </Pagination.Item>
@@ -85,28 +85,28 @@ function HomePage() {
                     <Pagination.Next onClick={() => setPage(page + 1)} />
                 </Pagination>
 
-                <h2 className="mt-5 mb-4">Upcoming Movies</h2>
+                <h2 className="mt-5 mb-4">upcoming Movies</h2>
                 <Row>
-                    {ListUpcoming.map((movie, index) => (
+                    {Listupcoming.map((movie, index) => (
                         <MovieCard key={index} movie={movie} />
                     ))}
                 </Row>
                 <Pagination className="d-flex justify-content-center mt-3">
-                    <Pagination.Prev onClick={() => setPageUpcoming(UpcomingPage - 1)} className={disabledUpcomingPrev} />
-                    {pageUpcomings}
-                    <Pagination.Next onClick={() => setPageUpcoming(UpcomingPage + 1)} className={disabledUpcomingNext} />
+                    <Pagination.Prev onClick={() => setPageupcoming(upcomingPage - 1)} className={disabledupcomingPrev} />
+                    {pageupcomings}
+                    <Pagination.Next onClick={() => setPageupcoming(upcomingPage + 1)} className={disabledupcomingNext} />
                 </Pagination>
 
                 <h2 className="mt-5 mb-4">Top Rated</h2>
                 <Row>
-                    {ListTopRated.map((movie, index) => (
+                    {ListtopRated.map((movie, index) => (
                         <MovieCard key={index} movie={movie} />
                     ))}
                 </Row>
                 <Pagination className="d-flex justify-content-center mt-3">
-                    <Pagination.Prev onClick={() => setPageTopRated(TopRatedPage - 1)} className={disabledTopRatedPrev} />
-                    {pageTopRateds}
-                    <Pagination.Next onClick={() => setPageTopRated(TopRatedPage + 1)} className={disabledTopRatedNext} />
+                    <Pagination.Prev onClick={() => setPagetopRated(topRatedPage - 1)} className={disabledtopRatedPrev} />
+                    {pagetopRateds}
+                    <Pagination.Next onClick={() => setPagetopRated(topRatedPage + 1)} className={disabledtopRatedNext} />
                 </Pagination>
             </Container>
         </Container>

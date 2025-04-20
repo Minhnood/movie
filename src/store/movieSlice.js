@@ -7,21 +7,21 @@ const initialState = {
     list: [],
     listFavourite: [],
     listPage: 1,
-    UpcomingPage: 1,
-    MaxUpcomingPage: 1,
-    TopRatedPage: 1,
-    MaxTopRatedPgae: 1,
-    SeacrhPage: 1,
-    MaxSearchPgae: 1,
+    upcomingPage: 1,
+    maxupcomingPage: 1,
+    topRatedPage: 1,
+    maxtopRatedPgae: 1,
+    seacrhPage: 1,
+    maxSearchPgae: 1,
     detailMovie: [],
-    Recommendations: [],
+    recommendations: [],
     genreList: [],
     searchList: [],
-    Upcoming:[],
-    TopRated:[],
-    Credits: [],
-    CreditsCrew: [],
-    detailsCredits: [],
+    upcoming:[],
+    topRated:[],
+    credits: [],
+    creditsCrew: [],
+    detailscredits: [],
     moviesActed: [],
     filmsMade: [],
 };
@@ -40,9 +40,9 @@ export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async
 });
 
 
-export const fetchMovieUpcoming = createAsyncThunk("Movie/fetchMovieUpcoming", async (data, thunkAPI) => {
+export const fetchMovieupcoming = createAsyncThunk("Movie/fetchMovieupcoming", async (data, thunkAPI) => {
     try {
-        const response = await movieService.getUpcoming(data);
+        const response = await movieService.getupcoming(data);
         return {
             list: response.data.results,
             listPage: response.data.page,
@@ -56,7 +56,7 @@ export const fetchMovieUpcoming = createAsyncThunk("Movie/fetchMovieUpcoming", a
 
 export const fetchTopRated = createAsyncThunk("Movie/fetchTopRated", async (data, thunkAPI) => {
     try {
-        const response = await movieService.getTopRated(data);
+        const response = await movieService.gettopRated(data);
         return {
             list: response.data.results,
             listPage: response.data.page,
@@ -88,9 +88,9 @@ export const fetchDetailsMovie = createAsyncThunk("Movie/fetchDetailsMovie", asy
     }
 });
 
-export const fetchRecommendations = createAsyncThunk("Movie/fetchRecommendations", async (data, thunkAPI) => {
+export const fetchrecommendations = createAsyncThunk("Movie/fetchrecommendations", async (data, thunkAPI) => {
     try {
-        const response = await movieService.getRecommendations(data);
+        const response = await movieService.getrecommendations(data);
         return response.data.results;
     } catch (err) {
         console.error("Error fetching categories:", err);
@@ -124,7 +124,7 @@ export const fetchFavourite = createAsyncThunk("post/fetchFavourite", async (dat
 });
 
 export const fetchCredits = createAsyncThunk("post/fetchCredits", async (data, thunkAPI) => {
-    const response = await movieService.getCredits(data);
+    const response = await movieService.getcredits(data);
     return {
        cast: response.data.cast,
        crew: response.data.crew,
@@ -133,12 +133,12 @@ export const fetchCredits = createAsyncThunk("post/fetchCredits", async (data, t
 });
 
 export const fetchDetailsCredits = createAsyncThunk("post/fetchDetailsCredits", async (data, thunkAPI) => {
-    const response = await movieService.getDetailsCredits(data);
+    const response = await movieService.getDetailscredits(data);
     return response.data;
 });
 
 export const fetchMovieCredits = createAsyncThunk("post/fetchMovieCredits", async (data, thunkAPI) => {
-    const response = await movieService.getMovieCredits(data);
+    const response = await movieService.getMoviecredits(data);
     console.log(response.data);
     
     return {
@@ -160,36 +160,36 @@ const slice = createSlice({
         buidler.addCase(fetchDetailsMovie.fulfilled, (state, action) => {
             state.detailMovie = action.payload;
         });
-        buidler.addCase(fetchRecommendations.fulfilled, (state, action) => {
-            state.Recommendations = action.payload;
+        buidler.addCase(fetchrecommendations.fulfilled, (state, action) => {
+            state.recommendations = action.payload;
         });
         buidler.addCase(fetchMovieGenress.fulfilled, (state, action) => {
             state.genreList = action.payload;
         });
         buidler.addCase(fetchSearch.fulfilled, (state, action) => {
             state.searchList = action.payload.sendData;
-            state.SeacrhPage = action.payload.listPage;
-            state.MaxSearchPgae = action.payload.maxPage;
+            state.seacrhPage = action.payload.listPage;
+            state.maxSearchPgae = action.payload.maxPage;
         });
-        buidler.addCase(fetchMovieUpcoming.fulfilled, (state, action) => {
-            state.Upcoming = action.payload.list;
-            state.UpcomingPage = action.payload.listPage;
-            state.MaxUpcomingPage = action.payload.maxPage;
+        buidler.addCase(fetchMovieupcoming.fulfilled, (state, action) => {
+            state.upcoming = action.payload.list;
+            state.upcomingPage = action.payload.listPage;
+            state.maxupcomingPage = action.payload.maxPage;
         });
         buidler.addCase(fetchTopRated.fulfilled, (state, action) => {
-            state.TopRated = action.payload.list;
-            state.TopRatedPage = action.payload.listPage;
-            state.MaxTopRatedPgae = action.payload.maxPage;
+            state.topRated = action.payload.list;
+            state.topRatedPage = action.payload.listPage;
+            state.maxtopRatedPgae = action.payload.maxPage;
         });
         buidler.addCase(fetchFavourite.fulfilled, (state, action) => {
             state.listFavourite = action.payload;
         });
         buidler.addCase(fetchCredits.fulfilled, (state, action) => {
-            state.Credits = action.payload.cast;
-            state.CreditsCrew = action.payload.crew;
+            state.credits = action.payload.cast;
+            state.creditsCrew = action.payload.crew;
         });
         buidler.addCase(fetchDetailsCredits.fulfilled, (state, action) => {
-            state.detailsCredits = action.payload;
+            state.detailscredits = action.payload;
         });
         buidler.addCase(fetchMovieCredits.fulfilled, (state, action) => {
             state.moviesActed = action.payload.cast;

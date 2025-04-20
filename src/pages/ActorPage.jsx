@@ -7,9 +7,9 @@ import { FaMapMarkerAlt, FaBirthdayCake, FaVenusMars, FaStar } from "react-icons
 
 function ActorPage() {
   const dispatch = useDispatch();
-  const detailsCredits = useSelector((state) => state.MOVIE.detailsCredits);
-  const Credits = useSelector((state) => state.MOVIE.moviesActed);
-  const CreditsCrew = useSelector((state) => state.MOVIE.filmsMade);
+  const detailscredits = useSelector((state) => state.MOVIE.detailscredits);
+  const cedits = useSelector((state) => state.MOVIE.moviesActed);
+  const creditsCrew = useSelector((state) => state.MOVIE.filmsMade);
 
   const { id } = useParams();
   useEffect(() => {
@@ -18,9 +18,9 @@ function ActorPage() {
   }, [dispatch, id]);
 
   let gender = "Not specified";
-  if (detailsCredits.gender === 1) gender = "Female";
-  else if (detailsCredits.gender === 2) gender = "Male";
-  else if (detailsCredits.gender === 3) gender = "Non-binary";
+  if (detailscredits.gender === 1) gender = "Female";
+  else if (detailscredits.gender === 2) gender = "Male";
+  else if (detailscredits.gender === 3) gender = "Non-binary";
 
   function getBorderColor(score) {
     if (score >= 70) return "#21d07a";
@@ -28,7 +28,7 @@ function ActorPage() {
     return "#db2360";
   }
 
-  const popularityScore = Math.floor(detailsCredits.popularity * 10);
+  const popularityScore = Math.floor(detailscredits.popularity * 10);
   const popularityColor = getBorderColor(popularityScore);
   const popularityDisplay = (popularityScore / 10).toFixed(1);
 
@@ -41,17 +41,17 @@ function ActorPage() {
               <Card.Img
                 variant="top"
                 src={
-                  detailsCredits.profile_path
-                    ? `https://image.tmdb.org/t/p/w500${detailsCredits.profile_path}`
+                  detailscredits.profile_path
+                    ? `https://image.tmdb.org/t/p/w500${detailscredits.profile_path}`
                     : "https://via.placeholder.com/500x750?text=No+Image"
                 }
-                alt={detailsCredits.name}
+                alt={detailscredits.name}
                 style={{ borderRadius: "12px" }}
               />
             </Card>
           </Col>
           <Col md={9}>
-            <h2 className="mb-3">{detailsCredits.name}</h2>
+            <h2 className="mb-3">{detailscredits.name}</h2>
             <Row className="mb-3">
               <Col xs={12} md={6}>
                 <p className="mb-2">
@@ -60,13 +60,13 @@ function ActorPage() {
                 </p>
                 <p className="mb-2">
                   <FaBirthdayCake className="me-2" />
-                  <strong>Birthday:</strong> {detailsCredits.birthday || "Unknown"}
+                  <strong>Birthday:</strong> {detailscredits.birthday || "Unknown"}
                 </p>
               </Col>
               <Col xs={12} md={6}>
                 <p className="mb-2">
                   <FaMapMarkerAlt className="me-2" />
-                  <strong>Place of Birth:</strong> {detailsCredits.place_of_birth || "Unknown"}
+                  <strong>Place of Birth:</strong> {detailscredits.place_of_birth || "Unknown"}
                 </p>
                 <p className="mb-2">
                   <FaStar className="me-2" />
@@ -87,16 +87,16 @@ function ActorPage() {
             </Row>
             <h5>Biography</h5>
             <p style={{ whiteSpace: "pre-line", lineHeight: "1.6" }}>
-              {detailsCredits.biography || "No biography available."}
+              {detailscredits.biography || "No biography available."}
             </p>
           </Col>
           <Row>
             <Col md={6}>
-              <h5> Movies acted ({Credits.length})</h5>
+              <h5> Movies acted ({cedits.length})</h5>
               <ListGroup variant="flush">
-                {Credits.map((actor, index) => (
+                {cedits.map((actor, index) => (
                   <ListGroup.Item key={index} className="bg-dark text-white">
-                    <Link to={`/DetailMovie/${actor.id}`} className="nav-link">
+                    <Link to={`/detail-movie/${actor.id}`} className="nav-link">
                       <Row className='d-flex align-items-center'>
                         <Col xs={2}>
                           <Image
@@ -118,11 +118,11 @@ function ActorPage() {
             </Col>
 
             <Col md={6}>
-              <h5>Films made ({CreditsCrew.length})</h5>
+              <h5>Films made ({creditsCrew.length})</h5>
               <ListGroup variant="flush">
-                {CreditsCrew.map((member, index) => (
+                {creditsCrew.map((member, index) => (
                   <ListGroup.Item key={index} className="bg-dark text-white">
-                  <Link to={`/DetailMovie/${member.id}`} className="nav-link">
+                  <Link to={`/detail-movie/${member.id}`} className="nav-link">
                     <Row className='d-flex align-items-center'>
                       <Col xs={2}>
                         <Image

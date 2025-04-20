@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import { Container, Row, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    fetchMovieUpcoming,
+    fetchMovieupcoming,
     fetchPopularList,
     fetchTopRated
 } from "../store/movieSlice";
 import MovieCard from "../components/MovieCard";
-import { fetchTvPopular, fetchTvToday, fetchTvTopRated } from "../store/tvSlice";
+import { fetchTvPopular, fetchTvToday, fetchTvtopRated } from "../store/tvSlice";
 import TvCard from "../components/TvCard";
 
 function TvPage() {
     const dispatch = useDispatch();
     const tvPopular = useSelector((state) => state.TV.tvPopular);
     const tvToday = useSelector((state) => state.TV.tvToday);
-    const tvTTopRated = useSelector((state) => state.TV.tvTTopRated);
+    const tvTtopRated = useSelector((state) => state.TV.tvTtopRated);
 
     const [page, setPage] = useState(1);
     const [pageToday, setPagepageToday] = useState(1);
-    const [pageTopRated, setPageTopRated] = useState(1);
+    const [pagetopRated, setPagetopRated] = useState(1);
 
     useEffect(() => {
         dispatch(fetchTvPopular(page));
         dispatch(fetchTvToday(pageToday));
-        dispatch(fetchTvTopRated());
+        dispatch(fetchTvtopRated());
     }, [dispatch,page]);
 
     const disabledPopularPrev = page === 1 ? "disabled" : "";
@@ -53,7 +53,7 @@ function TvPage() {
 
                 <h2 className="mt-5 mb-4">TV Top Rated</h2>
                 <Row>
-                    {tvTTopRated.map((movie, index) => (
+                    {tvTtopRated.map((movie, index) => (
                         <TvCard key={index} movie={movie} />
                     ))}
                 </Row>

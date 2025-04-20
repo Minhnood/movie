@@ -7,9 +7,9 @@ import {
 import Footer from "./components/Footer";
 import NavHeadt from "./components/NavHeadt";
 import HomePage from "./pages/HomePage";
-import DetailMovie from './pages/DetailMovie';
+import DetailMovie from './pages/detailMovie';
 import MyHotFlix from './pages/MyHotFlix';
-import Catalog from './pages/Catalog';
+import Catalog from './pages/catalog';
 import LoginForm from './pages/Login';
 import SearchPage from './pages/SearchPage';
 import CategoryMovie from './pages/CategoryMovie';
@@ -21,6 +21,7 @@ import DetailTv from './pages/DetailTv';
 import TvSeasons from './pages/TvSeasons';
 import TvPageSeasons from './pages/TvPageSeasons';
 import ScrollToTop from './pages/ScrollToTop';
+import TvEpisodes from './pages/TvEpisodes';
 // import useScrollToTop from './hooks/useScrollToTop';
 
 function App() {
@@ -40,13 +41,13 @@ function App() {
       {/* {useScrollToTop()} */}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/myProfile" element={<MyHotFlix />} />
+        <Route path="/my-profile" element={<MyHotFlix />} />
         {/* my-profile */}
-        <Route path="/Catalog" element={<Catalog />} />
+        <Route path="/catalog" element={<Catalog />} />
         {/* catalog */}
-        <Route path="/DetailMovie/:id" element={<DetailMovie />} />
+        <Route path="/detail-movie/:id" element={<DetailMovie />} />
         {/* detail-movie/:id */}
-        <Route path="/DetailMovie/:id/cast" element={<CastListPage />} />
+        <Route path="/detail-movie/:id/cast" element={<CastListPage />} />
         {/* detail-movie/:id/cast */}
         <Route path="/search" element={<SearchPage />} />
         <Route path="/category" element={<CategoryMovie />} />
@@ -55,13 +56,13 @@ function App() {
         <Route path="/person/:id" element={<ActorPage />} />
         <Route path="/tv_list" element={<TvPage />} />
         {/* tv */}
-        <Route path="detail-tv/:id" element={<DetailTv />} />
+        <Route path="tv/:id" element={<DetailTv />} />
         {/* tv/:id */}
-        <Route path="/tvDetails/:id/season" element={<TvSeasons />} />
+        <Route path="/tv-details/:id/season" element={<TvSeasons />} />
         {/* tv/:id/seasons */}
-        <Route path="/tvDetails/:id/seasonlist" element={<TvPageSeasons />} />
+        <Route path="/tv-details/:id/season-list" element={<TvPageSeasons />} />
         {/* tv/:id/seasons/:seasionId */}
-        <Route path="/tvDetails/:id/seasonlist/:seasonId" element={<TvSeasons />} />
+        <Route path="/tv-details/:id/season-list/:seasonId" element={<TvEpisodes />} />
       </Routes>
       <Footer />
     </BrowserRouter >

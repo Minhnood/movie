@@ -7,8 +7,8 @@ import { Link, useParams } from 'react-router-dom';
 function CastListPage() {
   const dispatch = useDispatch();
   const detailMovie = useSelector((state) => state.MOVIE.detailMovie);
-  const Credits = useSelector((state) => state.MOVIE.Credits);
-  const CreditsCrew = useSelector((state) => state.MOVIE.CreditsCrew);
+  const credits = useSelector((state) => state.MOVIE.credits);
+  const creditsCrew = useSelector((state) => state.MOVIE.creditsCrew);
 
   const { id } = useParams();
 
@@ -44,9 +44,9 @@ function CastListPage() {
 
         <Row>
           <Col md={6}>
-            <h5>Diễn viên ({Credits.length})</h5>
+            <h5>Diễn viên ({credits.length})</h5>
             <ListGroup variant="flush">
-              {Credits.map((actor, index) => (
+              {credits.map((actor, index) => (
                 <ListGroup.Item key={index}>
                   <Link to={`/person/${actor.id}`} className="nav-link">
                     <Row className='d-flex align-items-center'>
@@ -71,9 +71,9 @@ function CastListPage() {
           </Col>
 
           <Col md={6}>
-            <h5>Phi hành đoàn ({CreditsCrew.length})</h5>
+            <h5>Phi hành đoàn ({creditsCrew.length})</h5>
             <ListGroup variant="flush">
-              {CreditsCrew.map((member, index) => (
+              {creditsCrew.map((member, index) => (
                 <ListGroup.Item key={index}>
                   <Link to={`/person/${member.id}`} className="nav-link">
                     <Row className='d-flex align-items-center'>

@@ -3,22 +3,22 @@ import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
 import { BsBookmark } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { fetchCredits, fetchDetailsMovie, fetchRecommendations } from "../store/movieSlice";
+import { fetchCredits, fetchDetailsMovie, fetchrecommendations } from "../store/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
 
 function DetailMovie() {
   const dispatch = useDispatch();
   const detailMovie = useSelector((state) => state.MOVIE.detailMovie);
-  const Recommendations = useSelector((state) => state.MOVIE.Recommendations);
-  const Credits = useSelector((state) => state.MOVIE.Credits);
+  const recommendations = useSelector((state) => state.MOVIE.recommendations);
+  const credits = useSelector((state) => state.MOVIE.credits);
 
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchDetailsMovie(id));
     dispatch(fetchCredits(id));
-    dispatch(fetchRecommendations(id));
+    dispatch(fetchrecommendations(id));
   }, [dispatch, id]);
 
   const genres = detailMovie?.genres ? detailMovie.genres.map((item) => item.name) : [];
@@ -51,11 +51,11 @@ function DetailMovie() {
         </Row>
       </Container>
       <Container className="mt-5">
-        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className=""><Link to={`/DetailMovie/${id}/cast`} className="text-black text-decoration-none">View More</Link></Button></div>
+        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className=""><Link to={`/detail-movie/${id}/cast`} className="text-black text-decoration-none">View More</Link></Button></div>
         <Row>
-          {Credits.slice(0, 6).map((cast, index) => (
+          {credits.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4">
-              <Link to={`/person/${cast.id}`} className="nav-link text-white">
+              <Link to={`/person/${cast.id}`} className="nav-link text-white" key={cast.id}>
                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                   <Card.Img
                     src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
@@ -80,7 +80,7 @@ function DetailMovie() {
       <Container className="mt-5">
         <h3>You May Also Like...</h3>
         <Row>
-          {Recommendations.map((movie, index) => (
+          {recommendations.map((movie, index) => (
             <MovieCard key={index} movie={movie} />
           ))}
         </Row>

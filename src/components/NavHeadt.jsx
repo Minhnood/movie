@@ -41,7 +41,7 @@ function NavHeadt() {
 
   const userMenu = currentUser ? (
     <NavDropdown title={currentUser?.username} id="basic-nav-dropdown">
-      <NavDropdown.Item as={Link} to="/myProfile">Thông tin</NavDropdown.Item>
+      <NavDropdown.Item as={Link} to="/my-profile">Thông tin</NavDropdown.Item>
       <NavDropdown.Item as={Link} to="/favourite"> Phim yêu thích ( {listFavourite.length} )</NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item onClick={handleLogout}>Đăng xuất</NavDropdown.Item>

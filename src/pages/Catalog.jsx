@@ -20,7 +20,7 @@ function Catalog() {
           {movies.map((movie, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <Card className="movie-card position-relative text-white">
-                <Link to="/DetailMovie" className="nav-link text-white">
+                <Link to="/detail-movie" className="nav-link text-white">
                   <div className="movie-image-container position-relative">
                     <Card.Img src={movie.image} alt={movie.title} className="movie-img" />
                     <div className="play-button position-absolute top-50 start-50 translate-middle">
@@ -54,7 +54,7 @@ function Catalog() {
           {movies.map((movie, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <Card className="movie-card position-relative text-white">
-                <Link to="/DetailMovie" className="nav-link text-white">
+                <Link to="/detail-movie" className="nav-link text-white">
                   <div className="movie-image-container position-relative">
                     <Card.Img src={movie.image} alt={movie.title} className="movie-img" />
                     <div className="play-button position-absolute top-50 start-50 translate-middle">

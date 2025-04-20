@@ -7,10 +7,10 @@ import tvService from "../services/tvService";
 const initialState = {
     tvPopular: [],
     tvToday: [],
-    tvTTopRated: [],
+    tvTtopRated: [],
     tvDetails: [],
     tvDetailsSeasons: [],
-    tvRecommendations: [],
+    tvrecommendations: [],
     tvDetailsSeason: [],
     tvDetailsEpisodeId: [],
 };
@@ -28,8 +28,8 @@ export const fetchTvToday = createAsyncThunk("tv/fetchTvToday", async (data, thu
     return response.data.results;
 });
 
-export const fetchTvTopRated = createAsyncThunk("tv/fetchTvTopRated", async (data, thunkAPI) => {
-    const response = await tvService.getTopRatedTvList();
+export const fetchTvtopRated = createAsyncThunk("tv/fetchTvtopRated", async (data, thunkAPI) => {
+    const response = await tvService.gettopRatedTvList();
     return response.data.results;
 });
 
@@ -41,8 +41,8 @@ export const fetchTvDetails = createAsyncThunk("tv/fetchTvDetails", async (data,
         seasons: response.data.seasons};
 });
 
-export const fetchTvRecommendations = createAsyncThunk("tv/fetchRecommendations", async (data, thunkAPI) => {
-    const response = await tvService.getTvRecommendations(data);
+export const fetchTvrecommendations = createAsyncThunk("tv/fetchrecommendations", async (data, thunkAPI) => {
+    const response = await tvService.getTvrecommendations(data);
     console.log(response.data.results);
     return response.data.results;
 });
@@ -71,15 +71,15 @@ const slice = createSlice({
         buidler.addCase(fetchTvToday.fulfilled, (state, action) => {
             state.tvToday = action.payload;
         });
-        buidler.addCase(fetchTvTopRated.fulfilled, (state, action) => {
-            state.tvTTopRated = action.payload;
+        buidler.addCase(fetchTvtopRated.fulfilled, (state, action) => {
+            state.tvTtopRated = action.payload;
         });
         buidler.addCase(fetchTvDetails.fulfilled, (state, action) => {
             state.tvDetails = action.payload.list;
             state.tvDetailsSeasons =action.payload.seasons;
         });
-        buidler.addCase(fetchTvRecommendations.fulfilled, (state, action) => {
-            state.tvRecommendations = action.payload;
+        buidler.addCase(fetchTvrecommendations.fulfilled, (state, action) => {
+            state.tvrecommendations = action.payload;
         });
         buidler.addCase(fetchTvDetailsSeason.fulfilled, (state, action) => {
             state.tvDetailsSeason = action.payload;

@@ -7,7 +7,7 @@ const movieService = {
     getDetailMovie(data) {  
         return API.call().get(`movie/${data}`);
     },
-    getRecommendations(data) {
+    getrecommendations(data) {
         return API.call().get(`movie/${data}/recommendations?language=en-US&page=1`);
     },
     getMovieGenres() {
@@ -16,10 +16,10 @@ const movieService = {
     getSearchList(keyword) {
         return API.call().get(`/search/movie?query=${keyword.search}&page=${keyword.page}`);
     },
-    getUpcoming(data) {
+    getupcoming(data) {
         return API.call().get(`/movie/upcoming?page=${data}`);
     },
-    getTopRated(data) {
+    gettopRated(data) {
         return API.call().get(`/movie/top_rated?page=${data}`);
     },
     postFavourite(data) {
@@ -28,13 +28,13 @@ const movieService = {
     getFavourite() {
         return API.callWithToken().get(`/account/123/favorite/movies`);
     },
-    getCredits(data) {
+    getcredits(data) {
         return API.call().get(`/movie/${data}/credits`);
     },
-    getDetailsCredits(data) {
+    getDetailscredits(data) {
         return API.call().get(`/person/${data}`);
     },
-    getMovieCredits(data) {
+    getMoviecredits(data) {
         return API.call().get(`/person/${data}/movie_credits`);
     },
 }
