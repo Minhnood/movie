@@ -8,11 +8,10 @@ import TvCard from "../components/TvCard";
 function TvSeasons() {
   const dispatch = useDispatch();
   const tvDetails = useSelector((state) => state.TV.tvDetailsSeason);
-  const { id } = useParams();
+  const { id, season } = useParams();
   const [searchParams] = useSearchParams();
-  const seasonsId = searchParams.get("ids");
   
-  const data = { id, seasonsId }
+  const data = { id, season}
 
   useEffect(() => {
     dispatch(fetchTvDetailsSeason(data));
@@ -49,7 +48,7 @@ function TvSeasons() {
         <Row>
           {episodes.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-              <Link to={`/tv-details/${id}/season?ids=${seasonsId}/episodeId?key=${cast.id}`} className="nav-link text-white">
+              <Link to={`/tv-details/${id}/${season}/episode-list`} className="nav-link text-white">
                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                   <Card.Body className="text-center d-flex flex-column">
                     <Card.Img

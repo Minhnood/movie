@@ -2,25 +2,27 @@ import React, { useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTvDetailsEpisodeId, fetchTvrecommendations } from "../store/tvSlice";
+import { fetchTvDetailsEpisodeId, fetchTvDetailsSeason } from "../store/tvSlice";
 import EpisodeCard from "../components/EpisodeCard";
+import EpisodeDetail from "../components/EpisodeDetail";
 
 function TvEpisodes() {
   const dispatch = useDispatch();
-  const tvDetails = useSelector((state) => state.TV.tvDetailsEpisodeId);
-  const { id } = useParams();
+  const tvDetails = useSelector((state) => state.TV.tvDetailsSeason);
+  // const episodes = useSelector((state) => state.TV.tvDetailsEpisodeIds);
+  // tvDetailsEpisodeIds
+  const { id, season, episode } = useParams();
   const [searchParams] = useSearchParams();
-  const seasonsId = searchParams.get("ids");
-  const episodeId = searchParams.get("key");
 
-  const data = { id, seasonsId, episodeId };
+  console.log(tvDetails);
 
-  useEffect(() => {
-    dispatch(fetchTvrecommendations(id));
-    dispatch(fetchTvDetailsEpisodeId(data));
-  }, [dispatch, id, seasonsId, episodeId]);
+  const data = { id, season, episode };
 
   const episodes = tvDetails.episodes || [];
+  useEffect(() => {
+    dispatch(fetchTvDetailsSeason({ id: data.id, season: data.season }));
+    dispatch(fetchTvDetailsEpisodeId(data));
+  }, [dispatch, id, season]);
 
   return (
     <Container fluid className="bg-dark text-light py-4">
@@ -49,9 +51,17 @@ function TvEpisodes() {
       {/* Episode list */}
       <Container className="mt-5">
         <h4>Episodes ({episodes.length})</h4>
-        {episodes.map((episode) => (
-          <EpisodeCard episode={episode} key={episode.id} />
+        {episodes.map((ep) => (
+          <div key={ep.id}>
+            <EpisodeCard episode={ep} />
+
+            {episode === ep.episode_number?.toString() && (
+              <EpisodeDetail episode={ep} />
+            )}
+          </div>
         ))}
+
+
       </Container>
     </Container>
   );

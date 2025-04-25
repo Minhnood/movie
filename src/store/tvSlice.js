@@ -13,6 +13,7 @@ const initialState = {
     tvrecommendations: [],
     tvDetailsSeason: [],
     tvDetailsEpisodeId: [],
+    tvDetailsEpisodeIds: [],
 };
 
 // viet thuong: login, register, category
@@ -50,7 +51,9 @@ export const fetchTvrecommendations = createAsyncThunk("tv/fetchrecommendations"
 export const fetchTvDetailsSeason = createAsyncThunk("tv/fetchTvDetailsSeason", async (data, thunkAPI) => {
     const response = await tvService.getTvDetailsSeason(data);
     console.log(response.data);
-    return response.data;
+    return {
+        list : response.data,
+        episodes: response.data.episodes};
 });
 
 export const fetchTvDetailsEpisodeId = createAsyncThunk("tv/fetchTvDetailsEpisodeId", async (data, thunkAPI) => {
@@ -82,7 +85,8 @@ const slice = createSlice({
             state.tvrecommendations = action.payload;
         });
         buidler.addCase(fetchTvDetailsSeason.fulfilled, (state, action) => {
-            state.tvDetailsSeason = action.payload;
+            state.tvDetailsSeason = action.payload.list;
+            state.tvDetailsEpisodeIds = action.payload.episodes;
         });
         buidler.addCase(fetchTvDetailsEpisodeId.fulfilled, (state, action) => {
             state.tvDetailsEpisodeId = action.payload;

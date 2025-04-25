@@ -49,7 +49,7 @@ function DetailTv() {
         <Row>
           {seasons.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-              <Link to={`/tv-details/${id}/season?ids=${cast.id}`} className="nav-link text-white">
+              <Link to={`/tv-details/${id}/${cast.season_number}`} className="nav-link text-white">
                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                   <Card.Img
                     src={`https://image.tmdb.org/t/p/original${cast.poster_path}`}

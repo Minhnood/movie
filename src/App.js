@@ -58,11 +58,12 @@ function App() {
         {/* tv */}
         <Route path="tv/:id" element={<DetailTv />} />
         {/* tv/:id */}
-        <Route path="/tv-details/:id/season" element={<TvSeasons />} />
+        <Route path="/tv-details/:id/:season" element={<TvSeasons />} />
         {/* tv/:id/seasons */}
         <Route path="/tv-details/:id/season-list" element={<TvPageSeasons />} />
         {/* tv/:id/seasons/:seasionId */}
-        <Route path="/tv-details/:id/season-list/:seasonId" element={<TvEpisodes />} />
+        <Route path="/tv-details/:id/:season/episode-list" element={<TvEpisodes />} />
+        <Route path="/tv-details/:id/:season/:episode" element={<TvEpisodes />} />
       </Routes>
       <Footer />
     </BrowserRouter >

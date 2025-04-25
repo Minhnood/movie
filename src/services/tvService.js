@@ -17,10 +17,10 @@ const tvService = {
         return API.call().get(`/tv/${data}/recommendations`);
     },
     getTvDetailsSeason(data) {
-        return API.call().get(`/tv/${data.id}/season/${data.seasonId}`);
+        return API.call().get(`/tv/${data.id}/season/${data.season}`);
     },
     getTvDetailsEpisodeId(data) {
-        return API.call().get(`/tv/${data.id}/season/${data.seasonId}/episode/${data.episodeId}`);
+        return API.call().get(`/tv/${data.id}/season/${data.season}/episode/${data.episode}`);
     },
 }   
 

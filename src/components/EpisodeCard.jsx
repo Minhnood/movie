@@ -1,44 +1,48 @@
-// components/EpisodeCard.jsx
 import React from "react";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EpisodeCard({ episode }) {
+  const navigate = useNavigate();
+  const { id, season } = useParams(); // lấy id và season từ URL hiện tại
+
+  const handleNavigate = () => {
+    navigate(`/tv-details/${id}/${season}/${episode.episode_number}`);
+  };
+
   return (
-    <Card className="mb-4 bg-secondary text-white p-3">
-      <Row>
-        <Col md={2}>
-          <Card.Img
-            src={
-              episode.still_path
-                ? `https://image.tmdb.org/t/p/w300${episode.still_path}`
-                : "https://via.placeholder.com/150x84?text=No+Image"
-            }
-            alt={`Episode ${episode.episode_number}`}
-          />
-        </Col>
-        <Col md={10}>
-          <h5>
-            {episode.episode_number}. {episode.name}
-          </h5>
-          <p>
-            <small>{episode.air_date} • {episode.runtime || 23}m</small>
-          </p>
-          <p>{episode.overview || "We don't have an overview translated in English."}</p>
-          {episode.guest_stars && episode.guest_stars.length > 0 && (
-            <>
-              <strong>Guest Stars:</strong>
-              <ul>
-                {episode.guest_stars.map((star) => (
-                  <li key={star.id}>
-                    {star.name} as {star.character}
-                  </li>
-                ))}
-              </ul>
-            </>
+    <div className="mb-4">
+      <Card className="bg-dark text-light">
+        <div className="d-flex">
+          {episode.still_path && (
+            <img
+              src={`https://image.tmdb.org/t/p/w300${episode.still_path}`}
+              alt={episode.name}
+              style={{
+                width: "200px",
+                objectFit: "cover",
+                borderTopLeftRadius: "0.5rem",
+                borderBottomLeftRadius: "0.5rem",
+              }}
+            />
           )}
-        </Col>
-      </Row>
-    </Card>
+
+          <Card.Body>
+            <Card.Title>
+              {episode.episode_number}. {episode.name}
+            </Card.Title>
+            <Card.Text>
+              <strong>Air Date:</strong> {episode.air_date} <br />
+              <strong>Rating:</strong> {episode.vote_average} ⭐ <br />
+            </Card.Text>
+            <Card.Text className="text-light">{episode.overview}</Card.Text>
+            <Button variant="outline-light" size="sm" onClick={handleNavigate}>
+              Expand
+            </Button>
+          </Card.Body>
+        </div>
+      </Card>
+    </div>
   );
 }
 
