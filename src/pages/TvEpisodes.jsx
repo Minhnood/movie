@@ -60,8 +60,6 @@ function TvEpisodes() {
             )}
           </div>
         ))}
-
-
       </Container>
     </Container>
   );

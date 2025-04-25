@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EpisodeCard({ episode }) {
   const navigate = useNavigate();
-  const { id, season } = useParams(); // lấy id và season từ URL hiện tại
+  const { id, season } = useParams();
 
   const handleNavigate = () => {
     navigate(`/tv-details/${id}/${season}/${episode.episode_number}`);
