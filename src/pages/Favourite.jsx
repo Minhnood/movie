@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Row, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
+import { ToastContainer } from "react-toastify";
 
 function Favourite() {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ function Favourite() {
                         <MovieCard key={index} movie={movie} />
                     ))}
                 </Row>
+                <ToastContainer />
             </Container>
         </Container>
     );

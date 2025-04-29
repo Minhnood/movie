@@ -11,6 +11,7 @@ import {
 } from "../store/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
+import { toast, ToastContainer } from "react-toastify";
 
 function DetailMovie() {
   const dispatch = useDispatch();
@@ -34,6 +35,12 @@ function DetailMovie() {
 
   function addFavourite() {
     setIsLockbookmark(true);
+    if(!isFavorite)
+    {
+      toast("You liked the movie!");
+    }else{
+      toast("You dislike this movie!");
+    }
     dispatch(
       postFavourite({
         media_type: "movie",
@@ -81,6 +88,7 @@ function DetailMovie() {
                   ? "Added to Favorites"
                   : "Add to Favorites"}
             </Button>
+            <ToastContainer />
           </Col>
         </Row>
       </Container>

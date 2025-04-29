@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFavourite, postFavourite } from "../store/movieSlice";
+import { toast } from "react-toastify";
 
 
 
@@ -44,6 +45,11 @@ function MovieCard({ movie }) {
 
     function addFavourite() {
         // lock icon bookmark
+        if (!isFavorite) {
+            toast("You liked the movie!");
+        } else {
+            toast("You dislike this movie!");
+        }
         setIsLockbookmark(true);
         dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite })).then(res => {
             // unlock

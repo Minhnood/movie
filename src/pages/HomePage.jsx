@@ -7,6 +7,7 @@ import {
     fetchTopRated
 } from "../store/movieSlice";
 import MovieCard from "../components/MovieCard";
+import { ToastContainer } from "react-toastify";
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function HomePage() {
                 onClick={() => setPagetopRated(i)}
                 active={topRatedPage === i}
             >
-             {i}
+                {i}
             </Pagination.Item>
         );
     }
@@ -109,6 +110,7 @@ function HomePage() {
                     <Pagination.Next onClick={() => setPagetopRated(topRatedPage + 1)} className={disabledtopRatedNext} />
                 </Pagination>
             </Container>
+            <ToastContainer />
         </Container>
     );
 }
