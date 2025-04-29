@@ -6,6 +6,7 @@ import { fetchTvDetails } from "../store/tvSlice";
 
 function TvPageSeasons() {
     const dispatch = useDispatch();
+    const tvDetails = useSelector((state) => state.TV.tvDetails);
     const tvDetailsSeasons = useSelector((state) => state.TV.tvDetailsSeasons);
     console.log(tvDetailsSeasons);
     
@@ -22,10 +23,10 @@ function TvPageSeasons() {
                 <Row>
                     {tvDetailsSeasons.map((cast, index) => (
                         <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-                            <Link to={`/tv-details/${id}/${cast.season_number}`} className="nav-link text-white">
+                            <Link to={`/tv-details/${id}/season/${cast.season_number}`} className="nav-link text-white h-100">
                                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                                     <Card.Img
-                                        src={`https://image.tmdb.org/t/p/original${cast.poster_path}`}
+                                        src={cast.poster_path ? `https://image.tmdb.org/t/p/original${cast.poster_path}` : `https://image.tmdb.org/t/p/original${tvDetails.poster_path}`}
                                         className="movie-img"
                                     />
                                     <Card.Body className="text-center d-flex flex-column">

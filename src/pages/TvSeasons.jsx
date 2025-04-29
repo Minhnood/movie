@@ -1,73 +1,66 @@
-import React, { useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTvDetails, fetchTvDetailsSeason, fetchTvrecommendations } from "../store/tvSlice";
-import TvCard from "../components/TvCard";
+import { fetchTvDetailsSeason } from "../store/tvSlice";
+import EpisodeCard from "../components/EpisodeCard";
+import EpisodeDetail from "../components/EpisodeDetail";
 
 function TvSeasons() {
   const dispatch = useDispatch();
-  const tvDetails = useSelector((state) => state.TV.tvDetailsSeason);
   const { id, season } = useParams();
-  const [searchParams] = useSearchParams();
-  
-  const data = { id, season}
+  const [expandedEpisode, setExpandedEpisode] = useState(null);
+
+  const tvDetails = useSelector((state) => state.TV.tvDetailsSeason);
+  const episodes = tvDetails.episodes || [];
 
   useEffect(() => {
-    dispatch(fetchTvDetailsSeason(data));
-  }, [dispatch, id]);
+    dispatch(fetchTvDetailsSeason({ id, season }));
+  }, [dispatch, id, season]);
 
-  const episodes = tvDetails.episodes || [];
+  const toggleExpand = (episodeNumber) => {
+    setExpandedEpisode(prev => (prev === episodeNumber ? null : episodeNumber));
+  };
 
   return (
     <Container fluid className="bg-dark text-light py-4">
-      {/* Movie Header */}
+      {/* TV Show Info */}
       <Container>
         <Row>
           <Col md={3}>
             <Card className="bg-dark text-light border-0">
               <Card.Img
                 src={`https://image.tmdb.org/t/p/original${tvDetails.poster_path}`}
-                alt="Movie Poster"
+                alt={tvDetails.name}
               />
             </Card>
           </Col>
           <Col md={9}>
             <h2>{tvDetails.name}</h2>
             <p>
-              <strong>Episode run time: </strong> {tvDetails.episode_run_time + "h"} <br />
-              <strong>Air date:</strong> {tvDetails.air_date} <br />
+              <strong>Episode run time:</strong> {tvDetails.episode_run_time?.[0]} mins <br />
+              <strong>Air date:</strong> {tvDetails.air_date}
             </p>
-            <p>
-              {tvDetails.overview}
-            </p>
+            <p>{tvDetails.overview}</p>
           </Col>
         </Row>
       </Container>
-      <Container className="mt-5">
-        <Row>
-          {episodes.slice(0, 6).map((cast, index) => (
-            <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-              <Link to={`/tv-details/${id}/${season}/episode-list`} className="nav-link text-white">
-                <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
-                  <Card.Body className="text-center d-flex flex-column">
-                    <Card.Img
-                      src={`https://image.tmdb.org/t/p/original${cast.still_path}`}
-                      className="movie-img"
-                    />
-                    <Card.Title className="fw-bold text-dark fs-4">
-                      {cast.name}
-                    </Card.Title>
-                    <Card.Title className="text-dark fs-6 mt-auto">
-                      {cast.air_date}
-                    </Card.Title>
-                  </Card.Body>
-                </Card>
-              </Link>
-            </Col>
-          ))}
-        </Row>
 
+      {/* Episode List */}
+      <Container className="mt-5">
+        <h4>Episodes ({episodes.length})</h4>
+        {episodes.map((ep) => (
+          <div key={ep.id}>
+            <EpisodeCard
+              episode={ep}
+              onExpand={() => toggleExpand(ep.episode_number)}
+              isExpanded={expandedEpisode === ep.episode_number}
+            />
+            {expandedEpisode === ep.episode_number && (
+              <EpisodeDetail episode={ep} />
+            )}
+          </div>
+        ))}
       </Container>
     </Container>
   );

@@ -57,7 +57,7 @@ function MovieCard({ movie }) {
     return (
         <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
             <Card className={`movie-card position-relative text-white h-100 d-flex flex-column`}>
-                <Link to={`/detail-movie/${movie.id}`} className="nav-link text-white">
+                <Link to={`/detail-movie/${movie.id}`} className="nav-link text-white h-100">
                     <Card.Img
                         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                         className="movie-img"

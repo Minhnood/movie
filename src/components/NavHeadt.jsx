@@ -49,7 +49,7 @@ function NavHeadt() {
   ) : (
     <>
       <Nav.Item>
-        <Link to="/login" className="nav-link text-white">Đăng nhập</Link>
+        <Link to="/login" className="nav-link text-white h-100">Đăng nhập</Link>
       </Nav.Item>
     </>
   );
@@ -78,7 +78,7 @@ function NavHeadt() {
               {genreLists}
             </NavDropdown>
             <Nav.Item>
-              <Link to="/tv_list" className="nav-link text-white">Tv Shows</Link>
+              <Link to="/tv_list" className="nav-link text-white h-100">Tv Shows</Link>
             </Nav.Item>
             {userMenu}
           </Nav>

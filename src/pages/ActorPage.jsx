@@ -98,16 +98,17 @@ function ActorPage() {
                   <ListGroup.Item key={index} className="bg-dark text-white">
                     <Link to={`/detail-movie/${actor.id}`} className="nav-link">
                       <Row className='d-flex align-items-center'>
-                        <Col xs={2}>
+                        <Col xs={3} className="">
                           <Image
-                            src={`https://image.tmdb.org/t/p/original${actor.backdrop_path}`}
-                            style={{ width: 100, height: 130}}
-                            className="rounded-2"
+                            src={actor.poster_path ? `https://image.tmdb.org/t/p/original${actor.poster_path}` : `https://travinh.dcs.vn/Content/images/default-image.jpg`}
+                            className="rounded-2 movie-poster"
                           />
+
                         </Col>
                         <Col>
                           <strong>{actor.title}</strong><br />
                           <strong>Release date: </strong>{actor.release_date}<br />
+                          <strong>role: </strong>{actor.character}<br />
                         </Col>
                       </Row>
                     </Link>
@@ -122,22 +123,22 @@ function ActorPage() {
               <ListGroup variant="flush">
                 {creditsCrew.map((member, index) => (
                   <ListGroup.Item key={index} className="bg-dark text-white">
-                  <Link to={`/detail-movie/${member.id}`} className="nav-link">
-                    <Row className='d-flex align-items-center'>
-                      <Col xs={2}>
-                        <Image
-                          src={`https://image.tmdb.org/t/p/original${member.backdrop_path}`}
-                          style={{ width: 100, height: 130}}
-                          className="rounded-2"
-                        />
-                      </Col>
-                      <Col>
-                      <strong>{member.title}</strong><br />
-                      <strong>Release date: </strong>{member.release_date}<br />
-                      </Col>
-                    </Row>
-                  </Link>
-                </ListGroup.Item>
+                    <Link to={`/detail-movie/${member.id}`} className="nav-link">
+                      <Row className='d-flex align-items-center'>
+                        <Col xs={3}>
+                          <Image
+                            src={member.poster_path ? `https://image.tmdb.org/t/p/original${member.poster_path}` : `https://travinh.dcs.vn/Content/images/default-image.jpg`}
+                            className="rounded-2 movie-poster"
+                          />
+                        </Col>
+                        <Col>
+                          <strong>{member.title}</strong><br />
+                          <strong>Release date: </strong>{member.release_date}<br />
+                          <strong>Department: </strong>{member.department}<br />
+                        </Col>
+                      </Row>
+                    </Link>
+                  </ListGroup.Item>
                 ))}
               </ListGroup>
             </Col>

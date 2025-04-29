@@ -1,15 +1,8 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
 
-function EpisodeCard({ episode }) {
-  const navigate = useNavigate();
-  const { id, season } = useParams();
-
-  const handleNavigate = () => {
-    navigate(`/tv-details/${id}/${season}/${episode.episode_number}`);
-  };
-
+function EpisodeCard({ episode, onExpand, isExpanded }) {
   return (
     <div className="mb-4">
       <Card className="bg-dark text-light">
@@ -26,7 +19,6 @@ function EpisodeCard({ episode }) {
               }}
             />
           )}
-
           <Card.Body>
             <Card.Title>
               {episode.episode_number}. {episode.name}
@@ -36,8 +28,8 @@ function EpisodeCard({ episode }) {
               <strong>Rating:</strong> {episode.vote_average} ⭐ <br />
             </Card.Text>
             <Card.Text className="text-light">{episode.overview}</Card.Text>
-            <Button variant="outline-light" size="sm" onClick={handleNavigate}>
-              Expand
+            <Button variant="outline-light" size="sm" onClick={onExpand}>
+              {isExpanded ? "Collapse" : "Expand"}
             </Button>
           </Card.Body>
         </div>
@@ -45,5 +37,6 @@ function EpisodeCard({ episode }) {
     </div>
   );
 }
+
 
 export default EpisodeCard;

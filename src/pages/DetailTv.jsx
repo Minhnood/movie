@@ -45,14 +45,14 @@ function DetailTv() {
         </Row>
       </Container>
       <Container className="mt-5">
-        <div className="d-flex justify-content-between mb-4"><h3>Actor In The Movie</h3>  <Button className=""><Link to={`/tv-details/${id}/season-list`} className="text-black text-decoration-none">View More</Link></Button></div>
+        <div className="d-flex justify-content-between mb-4"><h3>Television Seasons</h3>  <Button className=""><Link to={`/tv-details/${id}/season-list`} className="text-black text-decoration-none">View More</Link></Button></div>
         <Row>
           {seasons.slice(0, 6).map((cast, index) => (
             <Col xs={12} sm={6} md={4} lg={2} className="mb-4" key={cast.id}>
-              <Link to={`/tv-details/${id}/${cast.season_number}`} className="nav-link text-white">
+              <Link to={`/tv-details/${id}/season/${cast.season_number}`} className="nav-link text-white h-100">
                 <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                   <Card.Img
-                    src={`https://image.tmdb.org/t/p/original${cast.poster_path}`}
+                    src={cast.poster_path ? `https://image.tmdb.org/t/p/original${cast.poster_path}` : `https://image.tmdb.org/t/p/original${tvDetails.poster_path}`}
                     className="movie-img"
                   />
                   <Card.Body className="text-center d-flex flex-column">

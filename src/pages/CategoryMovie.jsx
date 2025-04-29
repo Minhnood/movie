@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchPopularList } from "../store/movieSlice";
+import { fetchPopularList, postFavourite } from "../store/movieSlice";
 import { BsBookmark } from "react-icons/bs";
 import { useInView } from "react-intersection-observer";
 
@@ -10,6 +10,11 @@ function CategoryMovie() {
     const dispatch = useDispatch();
     const allMovies = useSelector((state) => state.MOVIE.list);
     const genreList = useSelector((state) => state.MOVIE.genreList);
+    const currentUser = useSelector((state) => state.USER.currentUser);
+    const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
+    console.log(listFavourite);
+
+    const [isLockbookmark, setIsLockbookmark] = useState(false);
 
     const [displayedMovies, setDisplayedMovies] = useState([]);
     const [page, setPage] = useState(1);
@@ -35,7 +40,7 @@ function CategoryMovie() {
         setHasMore(true);
     }, [categoryId]);
 
-    useEffect(() => {   
+    useEffect(() => {
         const filteredMovies = allMovies.filter((movie) =>
             movie.genre_ids.includes(categoryId)
         );
@@ -61,6 +66,10 @@ function CategoryMovie() {
         return "#db2360";
     }
 
+
+
+
+
     return (
         <Container fluid className="bg-dark text-light py-5 px-3">
             <Container>
@@ -71,10 +80,32 @@ function CategoryMovie() {
                             .filter((genreItem) => movie.genre_ids.includes(genreItem.id))
                             .map((g) => g.name);
 
+                        let color = "";
+                        let isFavorite = false;
+
+                        listFavourite.forEach((item) => {
+                            // kiem tra phim da duoc yeu thich
+                            if (item.id === movie.id) {
+                                color = "text-warning"
+                                isFavorite = true;
+                            }
+                        });
+
+                        function addFavourite() {
+                            // lock icon bookmark
+                            setIsLockbookmark(true);
+                            dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite })).then(res => {
+                                // unlock
+                                setIsLockbookmark(false)
+                            });
+                        }
+
+                        const bookmark = currentUser ? (<BsBookmark className={`bookmark-icon position-absolute top-0 end-0 m-2 bg-dark p-2 fs-2 ${color} rounded-2`} size={40} onClick={isLockbookmark == false ? addFavourite : null} />) : "";
+
                         return (
                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
                                 <Card className="movie-card position-relative text-white">
-                                    <Link to={`/detail-movie/${movie.id}`} className="nav-link text-white">
+                                    <Link to={`/detail-movie/${movie.id}`} className="nav-link text-white h-100">
                                         <Card.Img
                                             src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                                             className="movie-img"
@@ -88,7 +119,7 @@ function CategoryMovie() {
                                         >
                                             {(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}
                                         </span>
-                                        <BsBookmark className="bookmark-icon position-absolute top-0 end-0 m-2" />
+                                        {bookmark}
                                         <Card.Body className="text-center">
                                             <Card.Title className="fw-bold text-dark">
                                                 {movie.original_title}

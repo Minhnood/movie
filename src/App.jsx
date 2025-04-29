@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/movie.css';
 import {
   BrowserRouter,
   Route,
@@ -7,7 +8,7 @@ import {
 import Footer from "./components/Footer";
 import NavHeadt from "./components/NavHeadt";
 import HomePage from "./pages/HomePage";
-import DetailMovie from './pages/detailMovie';
+import DetailMovie from './pages/DetailMovie';
 import MyHotFlix from './pages/MyHotFlix';
 import Catalog from './pages/catalog';
 import LoginForm from './pages/Login';
@@ -21,7 +22,6 @@ import DetailTv from './pages/DetailTv';
 import TvSeasons from './pages/TvSeasons';
 import TvPageSeasons from './pages/TvPageSeasons';
 import ScrollToTop from './pages/ScrollToTop';
-import TvEpisodes from './pages/TvEpisodes';
 // import useScrollToTop from './hooks/useScrollToTop';
 
 function App() {
@@ -57,13 +57,13 @@ function App() {
         <Route path="/tv_list" element={<TvPage />} />
         {/* tv */}
         <Route path="tv/:id" element={<DetailTv />} />
-        {/* tv/:id */}
-        <Route path="/tv-details/:id/:season" element={<TvSeasons />} />
-        {/* tv/:id/seasons */}
+        {/* trang chi tiet tv */}
+        {/* tv/:id-:slug */} 
+        <Route path="/tv-details/:id/season/:season" element={<TvSeasons />} />
+        {/* trang danh sach seasons cua mot tv */}
+        {/* tv/:id-:slug/seasons */}
         <Route path="/tv-details/:id/season-list" element={<TvPageSeasons />} />
-        {/* tv/:id/seasons/:seasionId */}
-        <Route path="/tv-details/:id/:season/episode-list" element={<TvEpisodes />} />
-        <Route path="/tv-details/:id/:season/:episode" element={<TvEpisodes />} />
+        
       </Routes>
       <Footer />
     </BrowserRouter >

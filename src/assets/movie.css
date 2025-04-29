@@ -89,3 +89,27 @@
     opacity: 1;
     /* Hiện khi hover */
 }
+
+.movie-poster {
+    width: 130px;
+    height: 195px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #ccc;
+}
+
+@media (max-width: 576px) {
+    .movie-poster {
+        width: 70px;
+        height: 100px;
+    }
+}
+
+.avatar-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    background-color: #ccc;
+    border-radius: 50%;
+  }
+  

@@ -17,7 +17,7 @@ function CastListPage() {
     dispatch(fetchCredits(id));
   }, [dispatch, id]);
 
-  const fallbackImage = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; // ảnh avatar tròn mặc định
+  const fallbackImage = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
   return (
     <Container fluid className="py-4">
@@ -43,58 +43,64 @@ function CastListPage() {
         </h4>
 
         <Row>
+          {/* DIỄN VIÊN */}
           <Col md={6}>
             <h5>Diễn viên ({credits.length})</h5>
-            <ListGroup variant="flush">
+            <Row>
               {credits.map((actor, index) => (
-                <ListGroup.Item key={index}>
-                  <Link to={`/person/${actor.id}`} className="nav-link">
-                    <Row className='d-flex align-items-center'>
-                      <Col xs={2}>
-                        <Image
-                          src={actor.profile_path
-                            ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
-                            : fallbackImage}
-                          roundedCircle
-                          fluid
-                        />
-                      </Col>
-                      <Col>
-                        <strong>{actor.name}</strong>
-                        <div>{actor.character}</div>
-                      </Col>
-                    </Row>
-                  </Link>
-                </ListGroup.Item>
+                <Col md={6} key={index} className="mb-4">
+                  <ListGroup.Item className='p-0 py-2 bg-dark text-white rounded'>
+                    <Link to={`/person/${actor.id}`} className="nav-link">
+                      <Row className='align-items-center'>
+                        <Col xs={5} className='ps-4'>
+                          <Image
+                            src={actor.profile_path
+                              ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                              : fallbackImage}
+                            className="avatar-image"
+                            roundedCircle
+                          />
+                        </Col>
+                        <Col>
+                          <strong>{actor.name}</strong>
+                          <div>{actor.character}</div>
+                        </Col>
+                      </Row>
+                    </Link>
+                  </ListGroup.Item>
+                </Col>
               ))}
-            </ListGroup>
+            </Row>
           </Col>
 
+          {/* PHI HÀNH ĐOÀN */}
           <Col md={6}>
             <h5>Phi hành đoàn ({creditsCrew.length})</h5>
-            <ListGroup variant="flush">
+            <Row>
               {creditsCrew.map((member, index) => (
-                <ListGroup.Item key={index}>
-                  <Link to={`/person/${member.id}`} className="nav-link">
-                    <Row className='d-flex align-items-center'>
-                      <Col xs={2}>
-                        <Image  
-                          src={member.profile_path
-                            ? `https://image.tmdb.org/t/p/original${member.profile_path}`
-                            : fallbackImage}
-                          roundedCircle
-                          fluid
-                        />
-                      </Col>
-                      <Col>
-                        <strong>{member.name}</strong>
-                        <div>{member.job}</div>
-                      </Col>
-                    </Row>
-                  </Link>
-                </ListGroup.Item>
+                <Col md={6} key={index} className="mb-4">
+                  <ListGroup.Item className='p-0 py-2 bg-dark text-white rounded'>
+                    <Link to={`/person/${member.id}`} className="nav-link">
+                      <Row className='align-items-center'>
+                        <Col xs={5} className='ps-4'>
+                          <Image
+                            src={member.profile_path
+                              ? `https://image.tmdb.org/t/p/original${member.profile_path}`
+                              : fallbackImage}
+                            className="avatar-image"
+                            roundedCircle
+                          />
+                        </Col>
+                        <Col>
+                          <strong>{member.name}</strong>
+                          <div>{member.job}</div>
+                        </Col>
+                      </Row>
+                    </Link>
+                  </ListGroup.Item>
+                </Col>
               ))}
-            </ListGroup>
+            </Row>
           </Col>
         </Row>
       </Container>
