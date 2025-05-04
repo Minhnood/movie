@@ -14,6 +14,7 @@ const initialState = {
     tvDetailsSeason: [],
     tvDetailsEpisodeId: [],
     tvDetailsEpisodeIds: [],
+    listTvFavourite: []
 };
 
 // viet thuong: login, register, category
@@ -62,6 +63,12 @@ export const fetchTvDetailsEpisodeId = createAsyncThunk("tv/fetchTvDetailsEpisod
     return response.data;
 });
 
+export const fetchTvFavourite = createAsyncThunk("tv/fetchTvFavourite", async (data, thunkAPI) => {
+    const response = await tvService.getTvFavourite();
+    console.log(response.data.results);
+    return response.data.results;
+});
+
 const slice = createSlice({
     name: "tv",
     initialState,
@@ -91,6 +98,11 @@ const slice = createSlice({
         buidler.addCase(fetchTvDetailsEpisodeId.fulfilled, (state, action) => {
             state.tvDetailsEpisodeId = action.payload;
         });
+
+        buidler.addCase(fetchTvFavourite.fulfilled, (state, action) => {
+            state.listTvFavourite = action.payload;
+        });
+
     }
 });
 

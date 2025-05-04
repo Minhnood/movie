@@ -7,7 +7,8 @@ import {
     fetchTopRated
 } from "../store/movieSlice";
 import MovieCard from "../components/MovieCard";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -71,6 +72,15 @@ function HomePage() {
             </Pagination.Item>
         );
     }
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.loginSuccess) {
+            toast.success("Đăng nhập thành công!");
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     return (
         <Container fluid className="bg-dark text-light py-5 px-3">

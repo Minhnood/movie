@@ -22,6 +22,11 @@ const tvService = {
     getTvDetailsEpisodeId(data) {
         return API.call().get(`/tv/${data.id}/season/${data.season}/episode/${data.episode}`);
     },
+    getTvFavourite() {
+        return API.callWithToken().get(`/account/123/favorite/tv`);
+    },
+
+    // https://api.themoviedb.org/3/account/{account_id}
 }   
 
 export default tvService;

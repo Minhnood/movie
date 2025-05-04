@@ -22,6 +22,7 @@ import DetailTv from './pages/DetailTv';
 import TvSeasons from './pages/TvSeasons';
 import TvPageSeasons from './pages/TvPageSeasons';
 import ScrollToTop from './pages/ScrollToTop';
+import TVFavourite from './pages/TVFavourite';
 // import useScrollToTop from './hooks/useScrollToTop';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/category" element={<CategoryMovie />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/favourite" element={<Favourite />} />
+        <Route path="/favourite-tv" element={<TVFavourite />} />
         <Route path="/person/:id" element={<ActorPage />} />
         <Route path="/tv_list" element={<TvPage />} />
         {/* tv */}
@@ -63,7 +65,7 @@ function App() {
         {/* trang danh sach seasons cua mot tv */}
         {/* tv/:id-:slug/seasons */}
         <Route path="/tv-details/:id/season-list" element={<TvPageSeasons />} />
-        
+       
       </Routes>
       <Footer />
     </BrowserRouter >

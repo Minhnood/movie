@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../store/userSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -19,15 +20,17 @@ const LoginForm = () => {
         
         if (!username || !password) {
             setError("Vui lòng nhập đầy đủ thông tin!");
+            toast("Vui lòng nhập đầy đủ thông tin!");
             return;
         }
 
         const data = { username, password };
         dispatch(login(data)).then((res) => {
             if (!res.error) {
-                navigate("/");
+                navigate("/", { state: { loginSuccess: true } });
             } else {
                 setError("Tên đăng nhập hoặc mật khẩu không đúng!");
+                toast("Tên đăng nhập hoặc mật khẩu không đúng!");
             }
         });
     }
@@ -62,6 +65,7 @@ const LoginForm = () => {
                         </Button>
                     </Form>
                 </Card>
+                <ToastContainer />
             </Container>
         </div>
     );

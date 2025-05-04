@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import movieService from "../services/movieService";
+import { fetchTvFavourite } from "./tvSlice";
 
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
     detailscredits: [],
     moviesActed: [],
     filmsMade: [],
+    reviewsMovi: [],
 };
 
 export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
@@ -81,6 +83,8 @@ export const fetchMovieGenress = createAsyncThunk("Movie/fetchMovieGenress", asy
 export const fetchDetailsMovie = createAsyncThunk("Movie/fetchDetailsMovie", async (data, thunkAPI) => {
     try {
         const response = await movieService.getDetailMovie(data);
+        console.log(response);
+        
         return response.data;
     } catch (err) {
         console.error("Error fetching categories:", err);
@@ -114,12 +118,19 @@ export const postFavourite = createAsyncThunk("post/postFavourite", async (data,
     const response = await movieService.postFavourite(data);
     const {dispatch} = thunkAPI;
     dispatch(fetchFavourite());
+    dispatch(fetchTvFavourite());
     // dispatch fetch fav movies
 });
 
+export const fetchMoviReview = createAsyncThunk("post/fetchMoviReview", async (data, thunkAPI) => {
+    const response = await movieService.getMoviReview(data);
+    return response.data.results;
+});
+
+
 export const fetchFavourite = createAsyncThunk("post/fetchFavourite", async (data, thunkAPI) => {
     const response = await movieService.getFavourite();
-    
+
     return response.data.results;
 });
 
@@ -194,6 +205,9 @@ const slice = createSlice({
         buidler.addCase(fetchMovieCredits.fulfilled, (state, action) => {
             state.moviesActed = action.payload.cast;
             state.filmsMade = action.payload.crew;
+        });
+        buidler.addCase(fetchMoviReview.fulfilled, (state, action) => {
+            state.reviewsMovi = action.payload;
         });
     }
 });

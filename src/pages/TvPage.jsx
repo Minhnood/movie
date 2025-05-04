@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { Container, Row, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    fetchFavourite,
     fetchMovieupcoming,
     fetchPopularList,
     fetchTopRated
 } from "../store/movieSlice";
 import MovieCard from "../components/MovieCard";
-import { fetchTvPopular, fetchTvToday, fetchTvtopRated } from "../store/tvSlice";
+import { fetchTvFavourite, fetchTvPopular, fetchTvToday, fetchTvtopRated } from "../store/tvSlice";
 import TvCard from "../components/TvCard";
+import { ToastContainer } from "react-toastify";
 
 function TvPage() {
     const dispatch = useDispatch();
@@ -24,7 +26,7 @@ function TvPage() {
         dispatch(fetchTvPopular(page));
         dispatch(fetchTvToday(pageToday));
         dispatch(fetchTvtopRated());
-    }, [dispatch,page]);
+    }, [dispatch, page]);
 
     const disabledPopularPrev = page === 1 ? "disabled" : "";
 
@@ -57,7 +59,7 @@ function TvPage() {
                         <TvCard key={index} movie={movie} />
                     ))}
                 </Row>
-              
+                <ToastContainer />
             </Container>
         </Container>
     );

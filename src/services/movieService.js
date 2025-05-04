@@ -37,6 +37,9 @@ const movieService = {
     getMoviecredits(data) {
         return API.call().get(`/person/${data}/movie_credits`);
     },
+    getMoviReview(data) {
+        return API.call().get(`/movie/${data}/reviews`);
+    },
 }
 
 export default movieService;

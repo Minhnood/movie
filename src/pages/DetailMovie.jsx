@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Tabs, Tab, Badge, Image } from "react-bootstrap";
 import { BsBookmark } from "react-icons/bs";
-import { FaPlay } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import {
   fetchCredits,
   fetchDetailsMovie,
+  fetchMoviReview,
   fetchrecommendations,
   postFavourite,
 } from "../store/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
 import { toast, ToastContainer } from "react-toastify";
+import ReviewItem from "../components/ReviewItem";
 
 function DetailMovie() {
   const dispatch = useDispatch();
@@ -19,28 +20,35 @@ function DetailMovie() {
   const recommendations = useSelector((state) => state.MOVIE.recommendations);
   const credits = useSelector((state) => state.MOVIE.credits);
   const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
+  const reviewsMovi = useSelector((state) => state.MOVIE.reviewsMovi);
   const [isLockbookmark, setIsLockbookmark] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+
+  console.log(reviewsMovi);
+
 
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchDetailsMovie(id));
-    dispatch(fetchCredits(id));
-    dispatch(fetchrecommendations(id));
+    setIsLoading(true);
+    Promise.all([
+      dispatch(fetchDetailsMovie(id)),
+      dispatch(fetchCredits(id)),
+      dispatch(fetchrecommendations(id)),
+      dispatch(fetchMoviReview(id)),
+    ]).then(() => {
+      setIsLoading(false);
+    });
   }, [dispatch, id]);
 
   const genres = detailMovie?.genres ? detailMovie.genres.map((item) => item.name) : [];
-
   const isFavorite = listFavourite.some((item) => item.id === Number(id));
 
   function addFavourite() {
     setIsLockbookmark(true);
-    if(!isFavorite)
-    {
-      toast("You liked the movie!");
-    }else{
-      toast("You dislike this movie!");
-    }
+    toast(isFavorite ? "You dislike this movie!" : "You liked the movie!");
     dispatch(
       postFavourite({
         media_type: "movie",
@@ -50,6 +58,17 @@ function DetailMovie() {
     ).then(() => {
       setIsLockbookmark(false);
     });
+  }
+
+  if (isLoading) {
+    return (
+      <Container fluid className="bg-dark text-light py-5 text-center">
+        <div className="d-flex flex-column align-items-center">
+          <div className="spinner-border text-light" style={{ width: "4rem", height: "4rem" }} role="status"></div>
+          <p className="mt-3 fs-4">Đang tải dữ liệu phim...</p>
+        </div>
+      </Container>
+    );
   }
 
   return (
@@ -68,13 +87,11 @@ function DetailMovie() {
           <Col md={9}>
             <h2>{detailMovie.original_title}</h2>
             <p>
-              <strong>Director:</strong> Wes Gilligan <br />
               <strong>Genres:</strong> {genres.join(", ")} <br />
               <strong>Release date:</strong> {detailMovie.release_date} <br />
               <strong>Country:</strong> {detailMovie.origin_country}
             </p>
             <p>{detailMovie.overview}</p>
-            {/* Nút yêu thích */}
             <Button
               variant={isFavorite ? "success" : "outline-light"}
               className="d-flex align-items-center"
@@ -92,6 +109,22 @@ function DetailMovie() {
           </Col>
         </Row>
       </Container>
+      {/* Reviews Section */}
+      <Container className="mt-5">
+        <h3>Review ({reviewsMovi.length})</h3>
+        {(showAllReviews ? reviewsMovi : reviewsMovi.slice(0, 1)).map((cast) => (
+          <ReviewItem key={cast.id} cast={cast} />
+        ))}
+        {reviewsMovi.length > 1 && (
+          <div className="text-center mt-3">
+            <Button variant="outline-light" onClick={() => setShowAllReviews(!showAllReviews)}>
+              {showAllReviews ? "Rút gọn" : "Xem thêm"}
+            </Button>
+          </div>
+        )}
+      </Container>
+
+
 
       {/* Actors Section */}
       <Container className="mt-5">
@@ -108,15 +141,7 @@ function DetailMovie() {
         </div>
         <Row>
           {credits.slice(0, 6).map((cast) => (
-            <Col
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              xl={2}
-              className="mb-4"
-              key={cast.id}
-            >
+            <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-4" key={cast.id} >
               <Link
                 to={`/person/${cast.id}`}
                 className="nav-link text-white h-100"

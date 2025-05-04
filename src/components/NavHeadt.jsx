@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchMe, logout } from "../store/userSlice";
 import { Button, Container, Navbar, Nav, NavDropdown, InputGroup, Form } from "react-bootstrap";
 import { fetchFavourite, fetchMovieGenress } from "../store/movieSlice";
+import { fetchTvFavourite } from "../store/tvSlice";
 
 function NavHeadt() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.USER.currentUser);
   const genreList = useSelector((state) => state.MOVIE.genreList);
   const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
+  const listTvFavourite = useSelector((state) => state.TV.listTvFavourite);
 
   const SESSION_ID = localStorage.getItem("SESSION_ID");
   const navigate = useNavigate();
@@ -28,7 +30,8 @@ function NavHeadt() {
 
   useEffect(() => {
     dispatch(fetchMe(SESSION_ID));
-    dispatch(fetchMovieGenress())
+    dispatch(fetchMovieGenress());
+    dispatch(fetchTvFavourite());
     dispatch(fetchFavourite());
   }, [dispatch, searchList]);
 
@@ -43,6 +46,7 @@ function NavHeadt() {
     <NavDropdown title={currentUser?.username} id="basic-nav-dropdown">
       <NavDropdown.Item as={Link} to="/my-profile">Thông tin</NavDropdown.Item>
       <NavDropdown.Item as={Link} to="/favourite"> Phim yêu thích ( {listFavourite.length} )</NavDropdown.Item>
+      <NavDropdown.Item as={Link} to="/favourite-tv"> TV yêu thích ( {listTvFavourite.length} )</NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item onClick={handleLogout}>Đăng xuất</NavDropdown.Item>
     </NavDropdown>

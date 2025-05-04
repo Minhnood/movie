@@ -1,20 +1,17 @@
-import { Badge, Button, Card, Col } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { BsBookmark } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchFavourite, postFavourite } from "../store/movieSlice";
-
-
+import { useState } from "react";
+import { postFavourite } from "../store/movieSlice";
+import { toast } from "react-toastify";
+import { fetchTvFavourite } from "../store/tvSlice";
 
 function TvCard({ movie }) {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.USER.currentUser);
-    const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
+    const listTvFavourite = useSelector((state) => state.TV.listTvFavourite);
     const [isLockbookmark, setIsLockbookmark] = useState(false);
-    // lay danh sach phim yeu thich tu store
-    const genreNames = [];
-    const [id, setId] = useState(0);
 
     function getBorderColor(score) {
         if (score >= 70) return "#21d07a";
@@ -22,35 +19,45 @@ function TvCard({ movie }) {
         return "#db2360";
     }
 
-    // gia su rang phim chua duoc yeu thich
+    // Kiểm tra xem phim đã được yêu thích chưa
     let color = "";
     let isFavorite = false;
 
-    listFavourite.forEach((item) => {
-        // kiem tra phim da duoc yeu thich
-        if (item.id === movie.id) {
-            color = "text-warning"
-            isFavorite = true;
-        }
-    });
-
-
-
-    function addFavourite() {
-        // lock icon bookmark
-        setIsLockbookmark(true);
-        dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite })).then(res => {
-            // unlock
-            setIsLockbookmark(false)
+    if (Array.isArray(listTvFavourite)) {
+        listTvFavourite.forEach((item) => {
+            if (item.id === movie.id) {
+                color = "text-warning";
+                isFavorite = true;
+            }
         });
     }
 
+    function addFavourite() {
+        if (!currentUser) {
+            toast("Bạn cần đăng nhập để sử dụng tính năng này!");
+            return;
+        }
 
-    // viet dieu kien de active bookmark neu phim da duoc yeu thich
-    const bookmark = currentUser ? (<BsBookmark className={`bookmark-icon position-absolute top-0 end-0 m-2 bg-dark p-2 fs-2 ${color} rounded-2`} size={40} onClick={isLockbookmark == false ? addFavourite : null} />) : "";
+        toast(isFavorite ? "You unliked this TV show!" : "You liked this TV show!");
+
+        setIsLockbookmark(true);
+        dispatch(postFavourite({ media_type: "tv", media_id: movie.id, favorite: !isFavorite
+        })).then(() => {
+            setIsLockbookmark(false);
+        });
+    }
+
+    const bookmark = currentUser ? (
+        <BsBookmark
+            className={`bookmark-icon position-absolute top-0 end-0 m-2 bg-dark p-2 fs-2 ${color} rounded-2`}
+            size={40}
+            onClick={!isLockbookmark ? addFavourite : null}
+        />
+    ) : null;
+
     return (
         <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-            <Card className={`movie-card position-relative text-white h-100 d-flex flex-column`}>
+            <Card className="movie-card position-relative text-white h-100 d-flex flex-column">
                 <Link to={`/tv/${movie.id}`} className="nav-link text-white h-100">
                     <Card.Img
                         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -77,7 +84,6 @@ function TvCard({ movie }) {
                 {bookmark}
             </Card>
         </Col>
-
     );
 }
 

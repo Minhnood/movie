@@ -52,7 +52,6 @@ function MovieCard({ movie }) {
         }
         setIsLockbookmark(true);
         dispatch(postFavourite({ media_type: 'movie', media_id: movie.id, favorite: !isFavorite })).then(res => {
-            // unlock
             setIsLockbookmark(false)
         });
     }
