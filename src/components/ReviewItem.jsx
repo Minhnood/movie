@@ -8,11 +8,12 @@ const ReviewItem = ({ cast }) => {
 
   const getWordCount = (text) => text?.split(/\s+/).length;
 
-  const contentTooLong = getWordCount(cast.content) > 100;
+  const castContent = cast.content;
+  const contentTooLong = getWordCount(castContent) > 100;
 
   const truncatedContent = contentTooLong
-    ? cast.content.split(" ").slice(0, 50).join(" ") + "..."
-    : cast.content;
+    ? castContent.split(" ").slice(0, 50).join(" ") + "..."
+    : castContent;
 
   return (
     <Card className="p-4 shadow-sm border-0 mb-3 bg-light">
@@ -32,15 +33,13 @@ const ReviewItem = ({ cast }) => {
           <strong>A review by {cast.author_details.username}</strong>
           <div className="text-muted small">
             <Badge bg="primary" className="me-2">
-              ★ {cast.author_details.rating * 10}%
+              {cast.author_details.rating * 10}%
             </Badge>
             Written on {new Date(cast.updated_at).toLocaleDateString()}
           </div>
         </div>
       </div>
-      <p className="mb-0 text-dark">
-        {expanded || !contentTooLong ? cast.content : truncatedContent}
-      </p>
+      <div className="mb-0 text-dark" dangerouslySetInnerHTML={{ __html: expanded || !contentTooLong ? castContent : truncatedContent }}></div>
       {contentTooLong && (
         <Button
           variant="link"

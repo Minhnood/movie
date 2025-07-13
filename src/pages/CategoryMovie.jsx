@@ -8,11 +8,11 @@ import { useInView } from "react-intersection-observer";
 
 function CategoryMovie() {
     const dispatch = useDispatch();
-    const allMovies = useSelector((state) => state.MOVIE.list);
+    const allMovies = useSelector((state) => state.MOVIE.list); // 20
     const genreList = useSelector((state) => state.MOVIE.genreList);
     const currentUser = useSelector((state) => state.USER.currentUser);
     const listFavourite = useSelector((state) => state.MOVIE.listFavourite);
-    console.log(listFavourite);
+    const maxListPage = useSelector((state) => state.MOVIE.maxListPage);
 
     const [isLockbookmark, setIsLockbookmark] = useState(false);
 
@@ -41,18 +41,23 @@ function CategoryMovie() {
     }, [categoryId]);
 
     useEffect(() => {
-        const filteredMovies = allMovies.filter((movie) =>
+        let filteredMovies = allMovies.filter((movie) =>
             movie.genre_ids.includes(categoryId)
         );
+        console.log(filteredMovies);
+
+        filteredMovies = filteredMovies.filter(movie => {
+            return displayedMovies.findIndex((item) => movie.id === item.id) === -1;
+        });
 
         if (page === 1) {
             setDisplayedMovies(filteredMovies);
         } else if (filteredMovies.length > 0) {
             setDisplayedMovies((prev) => [...prev, ...filteredMovies]);
-        } else {
+        } else if (page === maxListPage){
             setHasMore(false);
         }
-    }, [allMovies, page, categoryId]);
+    }, [allMovies]);
 
     useEffect(() => {
         if (inView && hasMore) {

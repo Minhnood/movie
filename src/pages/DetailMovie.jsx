@@ -24,6 +24,7 @@ function DetailMovie() {
   const [isLockbookmark, setIsLockbookmark] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [showAllReviewPage, setshowAllReviewPage] = useState(3);
 
 
   console.log(reviewsMovi);
@@ -59,6 +60,7 @@ function DetailMovie() {
       setIsLockbookmark(false);
     });
   }
+
 
   if (isLoading) {
     return (
@@ -112,16 +114,14 @@ function DetailMovie() {
       {/* Reviews Section */}
       <Container className="mt-5">
         <h3>Review ({reviewsMovi.length})</h3>
-        {(showAllReviews ? reviewsMovi : reviewsMovi.slice(0, 1)).map((cast) => (
+        {(reviewsMovi.slice(0, showAllReviewPage)).map((cast) => (
           <ReviewItem key={cast.id} cast={cast} />
         ))}
-        {reviewsMovi.length > 1 && (
-          <div className="text-center mt-3">
-            <Button variant="outline-light" onClick={() => setShowAllReviews(!showAllReviews)}>
-              {showAllReviews ? "Rút gọn" : "Xem thêm"}
-            </Button>
-          </div>
-        )}
+        <div className="text-center mt-3">
+          <Button variant="outline-light" onClick={() => showAllReviewPage >= reviewsMovi.length ? setshowAllReviewPage(3) : setshowAllReviewPage(showAllReviewPage + 3)}>
+            {showAllReviewPage >= reviewsMovi.length ? "Gút gọn" : "Xem thêm"}
+          </Button>
+        </div>
       </Container>
 
 

@@ -8,6 +8,7 @@ const initialState = {
     list: [],
     listFavourite: [],
     listPage: 1,
+    maxListPage: 1,
     upcomingPage: 1,
     maxupcomingPage: 1,
     topRatedPage: 1,
@@ -28,18 +29,7 @@ const initialState = {
     reviewsMovi: [],
 };
 
-export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
-    try {
-        const response = await movieService.getPopularList(data);
-        return {
-            list: response.data.results,
-            listPage: response.data.page,
-        };
-    } catch (err) {
-        console.error("Error fetching categories:", err);
-        return thunkAPI.rejectWithValue(err.response?.data || "Lỗi không xác định");
-    }
-});
+
 
 
 export const fetchMovieupcoming = createAsyncThunk("Movie/fetchMovieupcoming", async (data, thunkAPI) => {
@@ -158,6 +148,20 @@ export const fetchMovieCredits = createAsyncThunk("post/fetchMovieCredits", asyn
      }
 });
 
+export const fetchPopularList = createAsyncThunk("Movie/fetchPopularList", async (data, thunkAPI) => {
+    try {
+        const response = await movieService.getPopularList(data);     
+        return {
+            list: response.data.results,
+            listPage: response.data.page,
+            maxPage: response.data.total_pages
+        };
+    } catch (err) {
+        console.error("Error fetching categories:", err);
+        return thunkAPI.rejectWithValue(err.response?.data || "Lỗi không xác định");
+    }
+});
+
 const slice = createSlice({
     name: "post",
     initialState,
@@ -167,6 +171,7 @@ const slice = createSlice({
         buidler.addCase(fetchPopularList.fulfilled, (state, action) => {
             state.list = action.payload.list;
             state.listPage = action.payload.listPage;
+            state.maxListPage = action.payload.maxPage;
         });
         buidler.addCase(fetchDetailsMovie.fulfilled, (state, action) => {
             state.detailMovie = action.payload;

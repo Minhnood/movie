@@ -17,13 +17,17 @@ function MyHotFlix() {
 
     useEffect(() => {
         dispatch(fetchTvtopRated());
-        dispatch(fetchTopRated());
-    }, [dispatch]);
+        dispatch(fetchTopRated(1));
+    }, []);
 
     function handleLogout(e) {
         e.preventDefault();
         dispatch(logout());
         navigate("/login");
+    }
+
+    function movieCard() {
+        
     }
 
     return (
@@ -74,7 +78,7 @@ function MyHotFlix() {
                                                 </thead>
                                                 <tbody>
                                                     {ListtopRated.slice(0, 5).map((movie, index) => (
-                                                        <tr key={movie.id || index}>
+                                                        <tr key={movie.id || index} onClick={() => navigate(`/detail-movie/${movie.id}`)}>
                                                             <td>{movie.title || movie.name}</td>
                                                             <td>{movie.media_type || 'Movie'}</td>
                                                             <td>{(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}</td>
@@ -95,7 +99,7 @@ function MyHotFlix() {
                                                 </thead>
                                                 <tbody>
                                                     {tvTtopRated.slice(0, 5).map((movie, index) => (
-                                                        <tr key={movie.id || index}>
+                                                        <tr key={movie.id || index} onClick={() => navigate(`/tv/${movie.id}`)}>
                                                             <td>{movie.title || movie.name}</td>
                                                             <td>{movie.media_type || 'TV'}</td>
                                                             <td>{(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}</td>
@@ -121,7 +125,7 @@ function MyHotFlix() {
                                                 </thead>
                                                 <tbody>
                                                     {listFavourite.map((movie, index) => (
-                                                        <tr key={movie.id || index}>
+                                                        <tr key={movie.id || index} onClick={() => navigate(`/detail-movie/${movie.id}`)}>
                                                             <td>{movie.title || movie.name}</td>
                                                             <td>{movie.media_type || 'Movie'}</td>
                                                             <td>{(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}</td>
@@ -142,7 +146,7 @@ function MyHotFlix() {
                                                 </thead>
                                                 <tbody>
                                                     {listTvFavourite.slice(0, 5).map((movie, index) => (
-                                                        <tr key={movie.id || index}>
+                                                        <tr key={movie.id || index} onClick={() => navigate(`/tv/${movie.id}`)}>
                                                             <td>{movie.title || movie.name}</td>
                                                             <td>{movie.media_type || 'TV'}</td>
                                                             <td>{(Math.floor(movie.vote_average * 10) / 10).toFixed(1)}</td>
